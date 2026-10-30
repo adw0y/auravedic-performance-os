@@ -1,0 +1,1573 @@
+{
+  "baseProducts": [
+    {
+      "key": "K100",
+      "name": "Kumkumadi Oil 100ml",
+      "category": "Face Oil / Serum",
+      "mrp": 1250,
+      "defaultCost": 185,
+      "hero": true
+    },
+    {
+      "key": "K30",
+      "name": "Kumkumadi Tailam 30ml",
+      "category": "Face Oil / Serum",
+      "mrp": 550,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "KMA",
+      "name": "Kumkuma Oil 100ml (Formula B)",
+      "category": "Face Oil",
+      "mrp": 850,
+      "defaultCost": 135,
+      "hero": false
+    },
+    {
+      "key": "SBO",
+      "name": "Skin Brightening Oil 100ml",
+      "category": "Face Oil",
+      "mrp": 650,
+      "defaultCost": 120,
+      "hero": false
+    },
+    {
+      "key": "KNS",
+      "name": "Kumkumadi Night Serum 50ml",
+      "category": "Serum",
+      "mrp": 699,
+      "defaultCost": 100,
+      "hero": false
+    },
+    {
+      "key": "KGEL",
+      "name": "Kumkumadi Gel 100g",
+      "category": "Gel / Moisturizer",
+      "mrp": 450,
+      "defaultCost": 90,
+      "hero": false
+    },
+    {
+      "key": "KNC",
+      "name": "Kumkumadi Night Cream 50g",
+      "category": "Night Cream",
+      "mrp": 650,
+      "defaultCost": 150,
+      "hero": true
+    },
+    {
+      "key": "KC",
+      "name": "Kumkumadi Cream 100g",
+      "category": "Cream",
+      "mrp": 490,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "RBMO",
+      "name": "Relaxing Body Massage Oil 200ml",
+      "category": "Body Oil",
+      "mrp": 599,
+      "defaultCost": 110,
+      "hero": false
+    },
+    {
+      "key": "BTMO",
+      "name": "Body Toning Massage Oil 200ml",
+      "category": "Body Oil",
+      "mrp": 599,
+      "defaultCost": 115,
+      "hero": false
+    },
+    {
+      "key": "VCO",
+      "name": "Vitamin C Oil 100ml",
+      "category": "Face Oil",
+      "mrp": 550,
+      "defaultCost": 110,
+      "hero": false
+    },
+    {
+      "key": "VCC",
+      "name": "Vitamin C Cream",
+      "category": "Cream",
+      "mrp": 450,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "DTC",
+      "name": "De-tan Cream 100g",
+      "category": "Cream",
+      "mrp": 450,
+      "defaultCost": 90,
+      "hero": false
+    },
+    {
+      "key": "DSC",
+      "name": "Dark Spot Corrector Cream",
+      "category": "Cream",
+      "mrp": 499,
+      "defaultCost": 105,
+      "hero": false
+    },
+    {
+      "key": "FO",
+      "name": "Firming Age Repair Oil 100ml",
+      "category": "Face Oil",
+      "mrp": 650,
+      "defaultCost": 125,
+      "hero": false
+    },
+    {
+      "key": "ARP",
+      "name": "Age Repair Face Polish",
+      "category": "Scrub / Polish",
+      "mrp": 399,
+      "defaultCost": 85,
+      "hero": false
+    },
+    {
+      "key": "UO",
+      "name": "Ultra Skin Oil (Vitamin E) 100ml",
+      "category": "Face Oil",
+      "mrp": 550,
+      "defaultCost": 105,
+      "hero": false
+    },
+    {
+      "key": "PS",
+      "name": "Pigmentation Serum 30ml",
+      "category": "Serum",
+      "mrp": 599,
+      "defaultCost": 110,
+      "hero": false
+    },
+    {
+      "key": "NL",
+      "name": "Nalpamaradi Thailam 100ml",
+      "category": "Face & Body Oil",
+      "mrp": 650,
+      "defaultCost": 130,
+      "hero": false
+    },
+    {
+      "key": "SLM",
+      "name": "Skin Lightening Mask 100g",
+      "category": "Face Mask",
+      "mrp": 425,
+      "defaultCost": 85,
+      "hero": false
+    },
+    {
+      "key": "ACS",
+      "name": "Acne Calming Sunscreen SPF50",
+      "category": "Sunscreen",
+      "mrp": 499,
+      "defaultCost": 115,
+      "hero": false
+    },
+    {
+      "key": "ACFM",
+      "name": "Acne Clearing Face Mask 100g",
+      "category": "Face Mask",
+      "mrp": 399,
+      "defaultCost": 80,
+      "hero": false
+    },
+    {
+      "key": "NTFW",
+      "name": "Acne Clearing Face Wash (Tea Tree) 120ml",
+      "category": "Face Wash",
+      "mrp": 375,
+      "defaultCost": 75,
+      "hero": false
+    },
+    {
+      "key": "TTS",
+      "name": "Tea Tree Serum 30ml",
+      "category": "Serum",
+      "mrp": 499,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "CSSM",
+      "name": "Chia Seeds Sleep Mask",
+      "category": "Sleep Mask",
+      "mrp": 499,
+      "defaultCost": 90,
+      "hero": false
+    },
+    {
+      "key": "RWT",
+      "name": "Rose Water Toner 100ml",
+      "category": "Toner",
+      "mrp": 299,
+      "defaultCost": 60,
+      "hero": false
+    },
+    {
+      "key": "AG",
+      "name": "Aloevera Gel 100g",
+      "category": "Gel",
+      "mrp": 275,
+      "defaultCost": 55,
+      "hero": false
+    },
+    {
+      "key": "HGS",
+      "name": "Hair Growth Serum 30ml",
+      "category": "Hair Care",
+      "mrp": 699,
+      "defaultCost": 125,
+      "hero": false
+    },
+    {
+      "key": "HCS",
+      "name": "Hairfall Control Shampoo 500ml",
+      "category": "Hair Care",
+      "mrp": 499,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "HM",
+      "name": "Hair Mask 150g",
+      "category": "Hair Care",
+      "mrp": 499,
+      "defaultCost": 100,
+      "hero": false
+    },
+    {
+      "key": "RHO",
+      "name": "Rosemary Hair Oil 100ml",
+      "category": "Hair Care",
+      "mrp": 599,
+      "defaultCost": 110,
+      "hero": true
+    },
+    {
+      "key": "RHM",
+      "name": "Rosemary Hair Mist 100ml",
+      "category": "Hair Care",
+      "mrp": 399,
+      "defaultCost": 80,
+      "hero": false
+    },
+    {
+      "key": "RS",
+      "name": "Rosemary Shampoo 250ml",
+      "category": "Hair Care",
+      "mrp": 450,
+      "defaultCost": 85,
+      "hero": false
+    },
+    {
+      "key": "OHO",
+      "name": "Onion Hair Oil 100ml",
+      "category": "Hair Care",
+      "mrp": 499,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "PHO",
+      "name": "Protective Hair Oil 100ml",
+      "category": "Hair Care",
+      "mrp": 499,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "KFW",
+      "name": "Kumkumadi Face Wash 100ml",
+      "category": "Face Wash",
+      "mrp": 375,
+      "defaultCost": 75,
+      "hero": false
+    },
+    {
+      "key": "KM",
+      "name": "Kumkumadi Mask 100g",
+      "category": "Face Mask",
+      "mrp": 425,
+      "defaultCost": 85,
+      "hero": false
+    },
+    {
+      "key": "KUEC",
+      "name": "Kumkumadi Under Eye Cream 25g",
+      "category": "Eye Cream",
+      "mrp": 499,
+      "defaultCost": 95,
+      "hero": false
+    },
+    {
+      "key": "KUFW",
+      "name": "Kumkumadi Ubtan Face Wash",
+      "category": "Face Wash",
+      "mrp": 399,
+      "defaultCost": 80,
+      "hero": false
+    },
+    {
+      "key": "KSM",
+      "name": "Kumkumadi Sleep Mask 50g",
+      "category": "Sleep Mask",
+      "mrp": 549,
+      "defaultCost": 105,
+      "hero": false
+    },
+    {
+      "key": "KMO",
+      "name": "Kumkumadi Body Massage Oil 200ml",
+      "category": "Body Oil",
+      "mrp": 699,
+      "defaultCost": 135,
+      "hero": false
+    },
+    {
+      "key": "KBS",
+      "name": "Kumkumadi Brightening Serum SPF50",
+      "category": "Sunscreen / Serum",
+      "mrp": 599,
+      "defaultCost": 120,
+      "hero": false
+    },
+    {
+      "key": "KT",
+      "name": "Kumkumadi Toner 100ml",
+      "category": "Toner",
+      "mrp": 349,
+      "defaultCost": 65,
+      "hero": false
+    }
+  ],
+  "recipes": [
+    {
+      "code": "AV-K100",
+      "title": "Kumkumadi Oil 100ml (Single)",
+      "type": "S",
+      "channel": "Shopify",
+      "parts": {
+        "K100": 1
+      },
+      "sellingPrice": 999
+    },
+    {
+      "code": "AV-KNC",
+      "title": "Kumkumadi Retinol Night Cream 50g (Single)",
+      "type": "S",
+      "channel": "Shopify",
+      "parts": {
+        "KNC": 1
+      },
+      "sellingPrice": 585
+    },
+    {
+      "code": "AV-RHO",
+      "title": "Rosemary Hair Oil 100ml (Single)",
+      "type": "S",
+      "channel": "Shopify",
+      "parts": {
+        "RHO": 1
+      },
+      "sellingPrice": 499
+    },
+    {
+      "code": "AV-KGs",
+      "title": "Kumkumadi Glowing Skin Combo (Oil + Gel + Cream)",
+      "type": "C",
+      "channel": "Shopify",
+      "parts": {
+        "K100": 1,
+        "KGEL": 1,
+        "KC": 1
+      },
+      "sellingPrice": 999
+    },
+    {
+      "code": "AV-KB",
+      "title": "Kumkumadi Brightening Duo (Oil + Cream)",
+      "type": "C",
+      "channel": "Shopify",
+      "parts": {
+        "K100": 1,
+        "KC": 1
+      },
+      "sellingPrice": 739
+    },
+    {
+      "code": "AV-KNS",
+      "title": "Kumkumadi Night Serum Single",
+      "type": "S",
+      "channel": "Shopify",
+      "parts": {
+        "KNS": 1
+      },
+      "sellingPrice": 699
+    },
+    {
+      "code": "AV-KNS-KNC",
+      "title": "Kumkumadi Night Serum + Retinol Night Cream Duo",
+      "type": "C",
+      "channel": "Shopify",
+      "parts": {
+        "KNS": 1,
+        "KNC": 1
+      },
+      "sellingPrice": 899
+    },
+    {
+      "code": "AV-RHO-RHM",
+      "title": "Rosemary Hair Growth Duo (Oil + Mist)",
+      "type": "C",
+      "channel": "Shopify",
+      "parts": {
+        "RHO": 1,
+        "RHM": 1
+      },
+      "sellingPrice": 799
+    },
+    {
+      "code": "AV-220",
+      "title": "Kumkumadi Glowing Skin Ritual Set",
+      "type": "C",
+      "channel": "Shopify",
+      "parts": {
+        "K100": 1,
+        "KGEL": 1,
+        "KC": 1
+      },
+      "sellingPrice": 1225
+    },
+    {
+      "code": "B00YXTNFJC",
+      "title": "Auravedic Kumkumadi Oil 100ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "K100": 1
+      },
+      "sellingPrice": 999
+    },
+    {
+      "code": "B0FRS7F5J7",
+      "title": "Auravedic Rosemary Hair Oil 100ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "RHO": 1
+      },
+      "sellingPrice": 499
+    },
+    {
+      "code": "B09TR4VB8T",
+      "title": "Auravedic Relaxing Body Massage Oil 200ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "RBMO": 1
+      },
+      "sellingPrice": 549
+    },
+    {
+      "code": "B0DS5XLXBX",
+      "title": "Auravedic Kumkuma Oil 100ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "KMA": 1
+      },
+      "sellingPrice": 799
+    },
+    {
+      "code": "B09NPQ69SS",
+      "title": "Auravedic Kumkumadi Tailam 30ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "K30": 1
+      },
+      "sellingPrice": 499
+    },
+    {
+      "code": "B0DRSHKHW4",
+      "title": "Auravedic Kumkumadi Retinol Night Cream 50g",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "KNC": 1
+      },
+      "sellingPrice": 585
+    },
+    {
+      "code": "B00H96CHVI",
+      "title": "Auravedic Skin Brightening Serum Face Oil 100ml",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "SBO": 1
+      },
+      "sellingPrice": 599
+    },
+    {
+      "code": "B076Q1NVQV",
+      "title": "Auravedic Kumkumadi Oil 100ml & Ashwagandha Combo",
+      "type": "C",
+      "channel": "Amazon",
+      "parts": {
+        "K100": 1,
+        "SBO": 1
+      },
+      "sellingPrice": 1199
+    },
+    {
+      "code": "B07S35TM39",
+      "title": "Auravedic Kumkumadi Gel 100g",
+      "type": "S",
+      "channel": "Amazon",
+      "parts": {
+        "KGEL": 1
+      },
+      "sellingPrice": 425
+    }
+  ],
+  "unitEconomics": {
+    "KGs": {
+      "name": "Kumkumadi Glowing Skin Combo",
+      "cogs": 300.0,
+      "shipping": 85.0,
+      "metaCAC": 445.0,
+      "sellingPrice": 999.0,
+      "rtoCost": 166.0,
+      "netProfitWithRTO": 3.0,
+      "netProfitWithoutRTO": 169.0,
+      "marginPercent": 0.3
+    },
+    "KB": {
+      "name": "Kumkumadi Brightening Duo",
+      "cogs": 200.0,
+      "shipping": 85.0,
+      "metaCAC": 330.0,
+      "sellingPrice": 739.0,
+      "rtoCost": 123.0,
+      "netProfitWithRTO": 1.0,
+      "netProfitWithoutRTO": 124.0,
+      "marginPercent": 0.1
+    },
+    "KNS": {
+      "name": "Kumkumadi Night Serum Single",
+      "cogs": 100.0,
+      "shipping": 85.0,
+      "metaCAC": 395.0,
+      "sellingPrice": 699.0,
+      "rtoCost": 116.0,
+      "netProfitWithRTO": 3.0,
+      "netProfitWithoutRTO": 119.0,
+      "marginPercent": 0.4
+    },
+    "KNS+KNC": {
+      "name": "Kumkumadi Night Serum + Retinol Night Cream",
+      "cogs": 250.0,
+      "shipping": 85.0,
+      "metaCAC": 610.0,
+      "sellingPrice": 899.0,
+      "rtoCost": 189.0,
+      "netProfitWithRTO": -235.0,
+      "netProfitWithoutRTO": -46.0,
+      "marginPercent": -26.1
+    },
+    "DEFAULT": {
+      "name": "Standard Baseline Assumption",
+      "cogs": 125.0,
+      "shipping": 65.0,
+      "metaCAC": 380.0,
+      "sellingPrice": 650.0,
+      "rtoCost": 110.0,
+      "netProfitWithRTO": 75.0,
+      "netProfitWithoutRTO": 160.0,
+      "marginPercent": 11.5
+    }
+  },
+  "monthlyPerformance": [
+    {
+      "month": "Apr 2026",
+      "shopifyPreReturns": 1880000,
+      "shopifyNet": 1690000,
+      "amazonSales": 3470000,
+      "totalSales": 5350000,
+      "flipkartSalesEst": 850000,
+      "metaSpend": 1180000,
+      "googleSpend": 290000,
+      "totalAdsIncluded": 1470000,
+      "amazonAdsSpendEst": 680000,
+      "flipkartAdsSpend": 180000,
+      "salesPerRupeeAd": 3.63,
+      "amazonShare": 64.9,
+      "shopifyOrders": 3121,
+      "amazonOrders": 7559,
+      "metaROAS": 1.48,
+      "googleROAS": 2.56,
+      "realisticNetProfit": 1185000,
+      "contributionMargin": 22.1
+    },
+    {
+      "month": "May 2026",
+      "shopifyPreReturns": 1890000,
+      "shopifyNet": 1710000,
+      "amazonSales": 3650000,
+      "totalSales": 5540000,
+      "flipkartSalesEst": 890000,
+      "metaSpend": 1130000,
+      "googleSpend": 280000,
+      "totalAdsIncluded": 1410000,
+      "amazonAdsSpendEst": 710000,
+      "flipkartAdsSpend": 190000,
+      "salesPerRupeeAd": 3.94,
+      "amazonShare": 65.9,
+      "shopifyOrders": 3214,
+      "amazonOrders": 7370,
+      "metaROAS": 1.55,
+      "googleROAS": 2.65,
+      "realisticNetProfit": 1290000,
+      "contributionMargin": 23.3
+    },
+    {
+      "month": "Jun 2026",
+      "shopifyPreReturns": 2100000,
+      "shopifyNet": 1820000,
+      "amazonSales": 3260000,
+      "totalSales": 5360000,
+      "flipkartSalesEst": 920000,
+      "metaSpend": 1250000,
+      "googleSpend": 390000,
+      "totalAdsIncluded": 1640000,
+      "amazonAdsSpendEst": 690000,
+      "flipkartAdsSpend": 210000,
+      "salesPerRupeeAd": 3.27,
+      "amazonShare": 60.8,
+      "shopifyOrders": 3934,
+      "amazonOrders": 6765,
+      "metaROAS": 1.52,
+      "googleROAS": 1.48,
+      "realisticNetProfit": 940000,
+      "contributionMargin": 17.5
+    },
+    {
+      "month": "Jul 2026",
+      "shopifyPreReturns": 2330000,
+      "shopifyNet": 1980000,
+      "amazonSales": 3500000,
+      "totalSales": 5830000,
+      "flipkartSalesEst": 980000,
+      "metaSpend": 1340000,
+      "googleSpend": 350000,
+      "totalAdsIncluded": 1690000,
+      "amazonAdsSpendEst": 740000,
+      "flipkartAdsSpend": 220000,
+      "salesPerRupeeAd": 3.45,
+      "amazonShare": 60.0,
+      "shopifyOrders": 4357,
+      "amazonOrders": 7260,
+      "metaROAS": 1.62,
+      "googleROAS": 2.3,
+      "realisticNetProfit": 1150000,
+      "contributionMargin": 19.7
+    },
+    {
+      "month": "Aug 2026",
+      "shopifyPreReturns": 2270000,
+      "shopifyNet": 1280000,
+      "amazonSales": 3120000,
+      "totalSales": 5390000,
+      "flipkartSalesEst": 1050000,
+      "metaSpend": 1320000,
+      "googleSpend": 340000,
+      "totalAdsIncluded": 1660000,
+      "amazonAdsSpendEst": 720000,
+      "flipkartAdsSpend": 225000,
+      "salesPerRupeeAd": 3.24,
+      "amazonShare": 57.9,
+      "shopifyOrders": 4296,
+      "amazonOrders": 6526,
+      "metaROAS": 1.65,
+      "googleROAS": 2.25,
+      "realisticNetProfit": 710000,
+      "contributionMargin": 13.2
+    },
+    {
+      "month": "Sep 2026",
+      "shopifyPreReturns": 3000000,
+      "shopifyNet": 2680000,
+      "amazonSales": 2840000,
+      "totalSales": 5840000,
+      "flipkartSalesEst": 1120000,
+      "metaSpend": 1780000,
+      "googleSpend": 380000,
+      "totalAdsIncluded": 2160000,
+      "amazonAdsSpendEst": 780000,
+      "flipkartAdsSpend": 230000,
+      "salesPerRupeeAd": 2.7,
+      "amazonShare": 48.6,
+      "shopifyOrders": 6065,
+      "amazonOrders": 5958,
+      "metaROAS": 1.76,
+      "googleROAS": 2.12,
+      "realisticNetProfit": 860000,
+      "contributionMargin": 14.7
+    },
+    {
+      "month": "Oct 2026 (MTD)",
+      "shopifyPreReturns": 2700000,
+      "shopifyNet": 2420000,
+      "amazonSales": 2980000,
+      "totalSales": 5680000,
+      "flipkartSalesEst": 1450000,
+      "metaSpend": 1540000,
+      "googleSpend": 370000,
+      "totalAdsIncluded": 1910000,
+      "amazonAdsSpendEst": 820000,
+      "flipkartAdsSpend": 251000,
+      "salesPerRupeeAd": 2.98,
+      "amazonShare": 52.5,
+      "shopifyOrders": 5773,
+      "amazonOrders": 6794,
+      "metaROAS": 1.87,
+      "googleROAS": 2.56,
+      "realisticNetProfit": 1020000,
+      "contributionMargin": 18.0
+    }
+  ],
+  "amazonBusinessData": [
+    {
+      "parentAsin": "B00YXTNFJC",
+      "childAsin": "B00YXTNFJC",
+      "title": "Auravedic Kumkumadi Oil For Face 100 Ml, Kumkumadi Tailam Face Oil For Glowing Skin, Dark Spot Corrector Face Serum",
+      "unitsOrdered": 3619,
+      "totalOrderItems": 3315,
+      "estRevenue": 3615381
+    },
+    {
+      "parentAsin": "B0FRS7F5J7",
+      "childAsin": "B0FRS7F5J7",
+      "title": "Auravedic Rosemary Hair Oil For Hair Growth 100 Ml Pure Rosemary Oil For Hair Growth with Moringa Black Cumin Jojoba Amla and Almond",
+      "unitsOrdered": 577,
+      "totalOrderItems": 554,
+      "estRevenue": 576423
+    },
+    {
+      "parentAsin": "B0D1PMDF8P",
+      "childAsin": "B09TR4VB8T",
+      "title": "Auravedic Relaxing Body Massage Oil For Full Body Massager For Pain Relief Calming Moisturizer For Dry Skin Face 200 Ml Lavender Eucalyptus Mint Body Oil After Bath For Daily Use",
+      "unitsOrdered": 518,
+      "totalOrderItems": 467,
+      "estRevenue": 303030
+    },
+    {
+      "parentAsin": "B0DS5XLXBX",
+      "childAsin": "B0DS5XLXBX",
+      "title": "Auravedic Kumkuma Oil Kumkumadi Tailam Face Oil With Manjistha 100 Ml",
+      "unitsOrdered": 425,
+      "totalOrderItems": 393,
+      "estRevenue": 424575
+    },
+    {
+      "parentAsin": "B0CDXS4N4D",
+      "childAsin": "B09NPQ69SS",
+      "title": "Auravedic Kumkumadi Tailam Face Oil 30 ml Kumkumadi oil for Face Serum for Glowing Skin Brightening Radiant Youthful Glow",
+      "unitsOrdered": 376,
+      "totalOrderItems": 350,
+      "estRevenue": 187624
+    },
+    {
+      "parentAsin": "B0DRSJ5ZG5",
+      "childAsin": "B0DRSHKHW4",
+      "title": "Auravedic Kumkumadi Oil Retinol Night Cream For Face - Night Cream For Women With Niacinamide, Retinol, Saffron & Padmaka - Overnight Repair & Renew For Glowing Skin, 50g",
+      "unitsOrdered": 271,
+      "totalOrderItems": 266,
+      "estRevenue": 158535
+    },
+    {
+      "parentAsin": "B00H96CHVI",
+      "childAsin": "B00H96CHVI",
+      "title": "Auravedic Skin Brightening Serum Face Oil With Saffron Ashwagandha & Turmeric Moisturizer Face Serum For Glowing Skin Dark spots Pigmentation De-Tan 100ML Non-Greasy Formula For All Skin Types",
+      "unitsOrdered": 251,
+      "totalOrderItems": 195,
+      "estRevenue": 250749
+    },
+    {
+      "parentAsin": "B076Q1NVQV",
+      "childAsin": "B076Q1NVQV",
+      "title": "Auravedic Kumkumadi Oil For Face 100ml & Ashwagandha Saffron Turmeric Pigmentation Serum100ml Kumkumadi Tailam Face Oil Body Oil After Bath For Daily Use",
+      "unitsOrdered": 193,
+      "totalOrderItems": 175,
+      "estRevenue": 192807
+    },
+    {
+      "parentAsin": "B0BQLV62FH",
+      "childAsin": "B07S35TM39",
+      "title": "Auravedic Kumkumadi Gel Facial Moisturizer With Kumkumadi Oil For Face For Glowing Skin Pigmentation Dark Spots Moisturiser 100g Skin Brightening Gel",
+      "unitsOrdered": 158,
+      "totalOrderItems": 145,
+      "estRevenue": 157842
+    },
+    {
+      "parentAsin": "B0G6D1L4Y7",
+      "childAsin": "B0F7HKZJDP",
+      "title": "Auravedic Advance Hair Growth Serum For Scalp with 3% Redensyl, 4% Anagain, 3% Procapil, Caffeine, Biotin, Bhringaraj, Rosemary Oil For Hair Serum For Hair Fall Control 30ML",
+      "unitsOrdered": 159,
+      "totalOrderItems": 139,
+      "estRevenue": 79341
+    },
+    {
+      "parentAsin": "B0G4WBCHYS",
+      "childAsin": "B0G4WBCHYS",
+      "title": "Auravedic Dark Spots Removal Cream 100G Pigmentation Cream For Women Men Serum For Pigmentation and Dark Spot with Turmeric Manjistha Gotu Kola Licorice Mulberry Papaya Alpha-Arbutin & Almond Oil",
+      "unitsOrdered": 123,
+      "totalOrderItems": 121,
+      "estRevenue": 122877
+    },
+    {
+      "parentAsin": "B0DTYHQR4N",
+      "childAsin": "B07S483DWJ",
+      "title": "Auravedic Kumkumadi Face Cream For Glowing Skin With Kumkumadi Oil For Face 100g Pigmentation Cream Moisturizer For Dark Spots Detan Blemishes",
+      "unitsOrdered": 119,
+      "totalOrderItems": 112,
+      "estRevenue": 118881
+    },
+    {
+      "parentAsin": "B08FX4G4VR",
+      "childAsin": "B08FX4G4VR",
+      "title": "Auravedic Nalpamaradi Thailam for Face Body oil after bath for daily use 100 ml Nalpamaradi oil for Skin Brightening Pigmentation DeTan For Men Women",
+      "unitsOrdered": 113,
+      "totalOrderItems": 105,
+      "estRevenue": 112887
+    },
+    {
+      "parentAsin": "B08XBL7KPZ",
+      "childAsin": "B08XBL7KPZ",
+      "title": "Auravedic Avocado Oil Grapeseed Oil firming body oil after bath for daily use 100 ml body oil for glowing skin anti aging face body massage oil for full body anti aging serum oil",
+      "unitsOrdered": 92,
+      "totalOrderItems": 87,
+      "estRevenue": 91908
+    },
+    {
+      "parentAsin": "B0C16WMV35",
+      "childAsin": "B0C16WMV35",
+      "title": "Auravedic Kumkumadi Face Wash For Women Men 100ML Best Facewash For Glowing Skin Kumkumadi Tailam Niacinamide Face Wash For Oily Skin Dry Combination with Kumkumadhi oil Brighening Facewash",
+      "unitsOrdered": 98,
+      "totalOrderItems": 83,
+      "estRevenue": 97902
+    },
+    {
+      "parentAsin": "B07234VVKR",
+      "childAsin": "B07234VVKR",
+      "title": "Auravedic Kumkumadi Tailam Face Oil 100Ml Pack Of 2 Kumkumadi Oil For Face Glowing Skin Pigmentation Dark Spots Body Oil After Bath For Daily Use",
+      "unitsOrdered": 112,
+      "totalOrderItems": 70,
+      "estRevenue": 111888
+    },
+    {
+      "parentAsin": "B07S11BX34",
+      "childAsin": "B07S11BX34",
+      "title": "Auravedic Kumkumadhi Face Mask Kumkumadi Tailam Detan Pack Skin Brightening Tan Removal Face Pack For Women Men 100g Kumkumadi Oil Ubtan Detan Face Mask for women skin care brightening",
+      "unitsOrdered": 66,
+      "totalOrderItems": 65,
+      "estRevenue": 65934
+    },
+    {
+      "parentAsin": "B0FS1JFFVF",
+      "childAsin": "B0FS1JFFVF",
+      "title": "Auravedic Rosemary Shampoo For Hair Growth 300ML Anti Hair Fall Shampoo For Women Men Rosemary Oil For Hairfall with Hibiscus Peppermint Leaf Menthol Ginger Moringa Jatamansi & Tea Tree Oil",
+      "unitsOrdered": 67,
+      "totalOrderItems": 60,
+      "estRevenue": 33433
+    },
+    {
+      "parentAsin": "B0G4VTKNRT",
+      "childAsin": "B0G4VTKNRT",
+      "title": "Auravedic Onion Hair Oil Scalp Relief Ayurvedic Hair Oil with Tea Tree Oil 100ml Amla for Men and Women Paraben Free",
+      "unitsOrdered": 60,
+      "totalOrderItems": 60,
+      "estRevenue": 59940
+    },
+    {
+      "parentAsin": "B0F7LM4CCH",
+      "childAsin": "B0F7LM4CCH",
+      "title": "Auravedic Acne UV Sunscreen SPF 50 PA++++ for Acne Prone Oily Skin with Himalayan Berry Green Apple Gotu Kola Niacinamide 2% Salicylic Acid Pore Minimizing Non Greasy No White Cast Cream",
+      "unitsOrdered": 65,
+      "totalOrderItems": 58,
+      "estRevenue": 38025
+    },
+    {
+      "parentAsin": "B0BX3353LD",
+      "childAsin": "B0BX3353LD",
+      "title": "Auravedic Rosehip Oil Vitamin E Oil for Face Bodyoil After Bath For Daily Use with Olive Jojoba Orange Oil & Almond Oils For Soft Glowing Nourished Youthful Skin– 100ml",
+      "unitsOrdered": 59,
+      "totalOrderItems": 56,
+      "estRevenue": 58941
+    },
+    {
+      "parentAsin": "B08WRCRLVH",
+      "childAsin": "B08WRCRLVH",
+      "title": "Auravedic Vitamin C Serum For Glowing Skin Men Women 100ML Vitamin C Moisturizer For Face Oil Body Oil After Bath For Daily Use With Vitamin e Avocado Grapeseed Almond Oil Best Moisturizer For Skin",
+      "unitsOrdered": 54,
+      "totalOrderItems": 52,
+      "estRevenue": 53946
+    },
+    {
+      "parentAsin": "B0G2H3HCF7",
+      "childAsin": "B0G2H3HCF7",
+      "title": "Auravedic Rosemary Hair Mask for Hair Growth 100G with Rosemary Oil for Hairfall for Women Men with Moringa Amla Bhringraj Avocado Jojoba Oil",
+      "unitsOrdered": 49,
+      "totalOrderItems": 44,
+      "estRevenue": 48951
+    },
+    {
+      "parentAsin": "B08FCD6CCF",
+      "childAsin": "B08FCD6CCF",
+      "title": "Auravedic Kumkumadi tailam for face Kumkumadi face oil for glowing skin & Nalpamaradi thailam 100 ml pack of 2 kumkumadi oil pigmentation serum body oil after bath for daily use",
+      "unitsOrdered": 44,
+      "totalOrderItems": 43,
+      "estRevenue": 43956
+    },
+    {
+      "parentAsin": "B0D5R9J2WN",
+      "childAsin": "B0D5R9J2WN",
+      "title": "Auravedic Kumkumadi Tailam Retinol Face Serum For Pigmentation and Dark Spot 50ml Niacinamide Serum For Oily Skin Dry Skin Combination Kumkumadi Oil For Face Anti Aging and Pigmentation",
+      "unitsOrdered": 42,
+      "totalOrderItems": 39,
+      "estRevenue": 24570
+    },
+    {
+      "parentAsin": "B07TZTJWSH",
+      "childAsin": "B07TZTJWSH",
+      "title": "Auravedic Kumkumadi Brightening Gel And Kumkumadi Tailam Kumkumadi Face Oil For Glowing Skin Kumkumadi Gel 100 Gms With Kumkumadi Oil 100 ml Day And Night Combo",
+      "unitsOrdered": 37,
+      "totalOrderItems": 36,
+      "estRevenue": 36963
+    },
+    {
+      "parentAsin": "B0D1PMDF8P",
+      "childAsin": "B0C5M6NWDM",
+      "title": "Auravedic Relaxing Body Massage Oil For Full Body Oil After Bath For Daily Use 100ml Pack Of 2 With Lavender Eucalyptus Mint Soothing and Calming",
+      "unitsOrdered": 38,
+      "totalOrderItems": 36,
+      "estRevenue": 37962
+    },
+    {
+      "parentAsin": "B073TTL8L7",
+      "childAsin": "B073TTL8L7",
+      "title": "Auravedic Saffron Face Oil For Glowing Skin 100 ml Pack of 2 Ashwagandha Turmeric Face Serum For Pigmentation And Dark Spot Serum For Women Glowing Skin Face Body Oil After Bath For Daily Use",
+      "unitsOrdered": 40,
+      "totalOrderItems": 31,
+      "estRevenue": 39960
+    },
+    {
+      "parentAsin": "B091Q7LQBL",
+      "childAsin": "B091Q7LQBL",
+      "title": "Auravedic Detan Cream for Tan Removal with Vitamin E Vitamin C Turmeric De Tan Cream for Suntan Removal 100g with Hyaluronic acid Alpha-Arbutin After Sun Niacinamide moisturizer for Women Men",
+      "unitsOrdered": 28,
+      "totalOrderItems": 28,
+      "estRevenue": 27972
+    },
+    {
+      "parentAsin": "B09YC9G1L5",
+      "childAsin": "B09YC9G1L5",
+      "title": "Auravedic Kumkumadi Tailam Face Toner For Women Men Anti Aging Serum Moisturizer 100ml Kumkumadi Oil For Face Niacinamide Toner For Oily Skin Acne Prone Skin Combination And Normal Type",
+      "unitsOrdered": 27,
+      "totalOrderItems": 26,
+      "estRevenue": 26973
+    },
+    {
+      "parentAsin": "B0BRQM2PP1",
+      "childAsin": "B0BRQM2PP1",
+      "title": "Auravedic kumkumadi Oil For Face Body Oil After Bath For Daily use 200ml Kumkumadi Tailam Body Massage For Full Body For Women Men",
+      "unitsOrdered": 27,
+      "totalOrderItems": 24,
+      "estRevenue": 15795
+    },
+    {
+      "parentAsin": "B0FM38BCZY",
+      "childAsin": "B0FM38BCZY",
+      "title": "Auravedic Face Pack For Acne And Dark Spots 100 G Clay Mask For Oily Acne Prone Skin Face Pack For Women With Tea Tree Oil Azelaic Acid Chamomile Gotu Kola Niacinamide And Hyaluronic Acid",
+      "unitsOrdered": 24,
+      "totalOrderItems": 24,
+      "estRevenue": 23976
+    },
+    {
+      "parentAsin": "B0CDXS4N4D",
+      "childAsin": "B09V5C5TL2",
+      "title": "Auravedic Kumkumadi Tailam For Face For Glowing Skin 30 ml Pack of 2 Kumkumadi Oil Dark Spot Corrector Glow Serum For Women Men",
+      "unitsOrdered": 21,
+      "totalOrderItems": 20,
+      "estRevenue": 10479
+    },
+    {
+      "parentAsin": "B0GF2QNGQX",
+      "childAsin": "B0GF2QNGQX",
+      "title": "Auravedic Pigmentation Serum For Pigmentation And Dark Spot Removal 30Ml Face serum For Glowing Skin with Gotu Kola Turmeric Manjistha Vitamin C & Alpha Arbutin Faceserum for women men",
+      "unitsOrdered": 16,
+      "totalOrderItems": 16,
+      "estRevenue": 7984
+    },
+    {
+      "parentAsin": "B00M6XCZPM",
+      "childAsin": "B00M6XCZPM",
+      "title": "Auravedic Anti Hair Fall Shampoo For Women Men 500 Ml Best Shampoo For Hair Fall Control with Amla Brahmi Mahabhringraj Oil For Hair Growth Natural Sulphate & Paraben Free",
+      "unitsOrdered": 22,
+      "totalOrderItems": 12,
+      "estRevenue": 12870
+    },
+    {
+      "parentAsin": "B00H96CK9W",
+      "childAsin": "B00H96CK9W",
+      "title": "Auravedic Skin Toning Body Massage Oil 200ml Body Oil After Bath for Daily use",
+      "unitsOrdered": 11,
+      "totalOrderItems": 11,
+      "estRevenue": 6435
+    },
+    {
+      "parentAsin": "B0C6GML7YQ",
+      "childAsin": "B0C6GML7YQ",
+      "title": "Auravedic Kumkumadi tailam,Gel and Kumkumadi face cream 100 ml 100g 100 g pack of 3 face oil for glowing skin",
+      "unitsOrdered": 11,
+      "totalOrderItems": 11,
+      "estRevenue": 10989
+    },
+    {
+      "parentAsin": "B0G6D1L4Y7",
+      "childAsin": "B0G4CJZDQ1",
+      "title": "Auravedic Advance Hair Growth Serum For Scalp with 3% Redensyl, 2% Anagain, 3% Procapil, Caffeine, Biotin, Bhringaraj, Rosemary Oil For Hair Serum For Hair Fall Control 30ML (pack 2)",
+      "unitsOrdered": 11,
+      "totalOrderItems": 11,
+      "estRevenue": 5489
+    },
+    {
+      "parentAsin": "B0GYQM8DKZ",
+      "childAsin": "B07234VVKR",
+      "title": "Auravedic Kumkumadi Tailam Face Oil 100Ml Pack Of 2 Kumkumadi Oil For Face Glowing Skin Pigmentation Dark Spots Body Oil After Bath For Daily Use",
+      "unitsOrdered": 14,
+      "totalOrderItems": 10,
+      "estRevenue": 13986
+    },
+    {
+      "parentAsin": "B0FM3GYTLN",
+      "childAsin": "B0FM3GYTLN",
+      "title": "Auravedic Neem tea tree oil 2% salicylic Acid face serum for acne prone skin Vetiver Pore minimizing face serum for acne and dark spots niacinamide serum for oily skin combination acne serum",
+      "unitsOrdered": 12,
+      "totalOrderItems": 10,
+      "estRevenue": 7020
+    },
+    {
+      "parentAsin": "B097N4JJGL",
+      "childAsin": "B097N4JJGL",
+      "title": "Auravedic Kumkumadi Tailam & Vitamin C Face Oil, Pack of 2 (100ml Each), Glow-Boosting Face & Body Oil With Rosehip For Bright, Radiant Skin, After Bath Daily Use",
+      "unitsOrdered": 9,
+      "totalOrderItems": 8,
+      "estRevenue": 8991
+    },
+    {
+      "parentAsin": "B099PTW389",
+      "childAsin": "B099PTW389",
+      "title": "Auravedic Kumkumadi Oil For Face 100 Ml, Pack of 3, Kumkumadi Tailam Face Oil For Glowing Skin, Dark Spot Corrector Face Serum",
+      "unitsOrdered": 21,
+      "totalOrderItems": 7,
+      "estRevenue": 20979
+    },
+    {
+      "parentAsin": "B0BQLV62FH",
+      "childAsin": "B099JZ1PGG",
+      "title": "AURAVEDIC Kumkumadi Gel for Brightening & Glow Pack of 2 - Kumkumadi to Purify, Detox, Glow & Renew Face & Skin Beauty Ritual for Women and Men",
+      "unitsOrdered": 5,
+      "totalOrderItems": 5,
+      "estRevenue": 2925
+    },
+    {
+      "parentAsin": "B0BMTVHQZ8",
+      "childAsin": "B0BLHFP11F",
+      "title": "Auravedic Kumkumadi tailam for face for glowing skin 100 ml pack of 5 Kumkumadi oil face serum oil Dark spot corrector glow serum for women men",
+      "unitsOrdered": 9,
+      "totalOrderItems": 5,
+      "estRevenue": 8991
+    },
+    {
+      "parentAsin": "B091TV3QGZ",
+      "childAsin": "B091TV3QGZ",
+      "title": "AURAVEDIC Vitamin C Face Cream For Women Men With Sunscreen Spf 50 Sun Cream Day Cream For Women Daily Use With Almond Oil Argan Oil Avocado Oil Jojoba Oil Dark Spot Removal Cream",
+      "unitsOrdered": 4,
+      "totalOrderItems": 4,
+      "estRevenue": 2340
+    },
+    {
+      "parentAsin": "B09VKDXG51",
+      "childAsin": "B09VKDXG51",
+      "title": "Auravedic Kumkumadi Glow Boosters, Kumkumadi Tailam (30ml) & Face Cream (100gm), Brightening & Hydrating Skincare Combo for Radiant Skin, For Men & Women",
+      "unitsOrdered": 3,
+      "totalOrderItems": 3,
+      "estRevenue": 2997
+    },
+    {
+      "parentAsin": "B07JGDQKRV",
+      "childAsin": "B07JGDQKRV",
+      "title": "Auravedic Kumkumadi tailam Kumkumadi face cream for glowing skin Kumkumadi oil Kumkumadi cream for women men combo 100gm & 100ml",
+      "unitsOrdered": 2,
+      "totalOrderItems": 2,
+      "estRevenue": 1998
+    },
+    {
+      "parentAsin": "B08FBBVV6L",
+      "childAsin": "B08FBBVV6L",
+      "title": "AURAVEDIC Kumkumadi Total Radiance Kumkumadi Cream & Kumkumadi Mask, Each 100 Gm From kumkumadi Face Oil For Glowing Skin (Combo of 2)",
+      "unitsOrdered": 2,
+      "totalOrderItems": 2,
+      "estRevenue": 1998
+    },
+    {
+      "parentAsin": "B0C6GNPMX1",
+      "childAsin": "B0C6GNPMX1",
+      "title": "Auravedic Glow with the Kumkumadi Collection",
+      "unitsOrdered": 2,
+      "totalOrderItems": 2,
+      "estRevenue": 1170
+    },
+    {
+      "parentAsin": "B0D381LPMW",
+      "childAsin": "B0D381LPMW",
+      "title": "Auravedic Kumkumadi face oil Kumkumadi Tailam for glowing & Kumkumadi oil Ubtan Face pack powder organic kumkum powder Ubtan face wash Combo- 100 ml & 60 gm",
+      "unitsOrdered": 2,
+      "totalOrderItems": 2,
+      "estRevenue": 1998
+    },
+    {
+      "parentAsin": "B08GG5Y612",
+      "childAsin": "B08GG5Y612",
+      "title": "Auravedic Kumkumadi total radiance kumkumadi thailam, kumkumadi cream, kumkumadi mask set of 3 kumkumadi face oil for glowing skin (100ml+100gm+100gm)",
+      "unitsOrdered": 1,
+      "totalOrderItems": 1,
+      "estRevenue": 999
+    },
+    {
+      "parentAsin": "B0GYQM8DKZ",
+      "childAsin": "B0DS5XLXBX",
+      "title": "Auravedic Kumkuma Oil Kumkumadi Tailam Face Oil With Manjistha 100 Ml",
+      "unitsOrdered": 1,
+      "totalOrderItems": 1,
+      "estRevenue": 999
+    },
+    {
+      "parentAsin": "B0BMTVHQZ8",
+      "childAsin": "B0778HX9QY",
+      "title": "Auravedic Kumkumadi tailam for face for glowing skin 100 ml pack of 4 Kumkumadi oil for face serum for women glowing skin pigmentation serum face body oil after bath for daily use",
+      "unitsOrdered": 0,
+      "totalOrderItems": 0,
+      "estRevenue": 0
+    },
+    {
+      "parentAsin": "B07PRKYLP1",
+      "childAsin": "B07PRKYLP1",
+      "title": "Auravedic Nalpamaradi Thailam 100ml Saffron Face Oil 100ml Nalpamaradi Thailam Skin Brightening Treatment Face Oil For Glowing Skin De Tan For Men Women",
+      "unitsOrdered": 0,
+      "totalOrderItems": 0,
+      "estRevenue": 0
+    },
+    {
+      "parentAsin": "B0GYQM8DKZ",
+      "childAsin": "B099PTW389",
+      "title": "Auravedic Kumkumadi Oil For Face 100 Ml, Pack of 3, Kumkumadi Tailam Face Oil For Glowing Skin, Dark Spot Corrector Face Serum",
+      "unitsOrdered": 0,
+      "totalOrderItems": 0,
+      "estRevenue": 0
+    }
+  ],
+  "amazonInventoryPlan": [
+    {
+      "asin": "B00YXTNFJC",
+      "product": "K100",
+      "currentInventory": 5359.0,
+      "inbound": 4032.0,
+      "avgMonthlySale": 3905.0,
+      "neededToSend": 0.0,
+      "daysOfCover": 41.2
+    },
+    {
+      "asin": "B09TR4VB8T",
+      "product": "Relaxing",
+      "currentInventory": 1515.0,
+      "inbound": 192.0,
+      "avgMonthlySale": 893.0,
+      "neededToSend": 350.0,
+      "daysOfCover": 50.9
+    },
+    {
+      "asin": "B09NPQ69SS",
+      "product": "K30",
+      "currentInventory": 410.0,
+      "inbound": 144.0,
+      "avgMonthlySale": 369.0,
+      "neededToSend": 340.0,
+      "daysOfCover": 33.3
+    },
+    {
+      "asin": "B00H96CHVI",
+      "product": "SL100",
+      "currentInventory": 719.0,
+      "inbound": 0.0,
+      "avgMonthlySale": 420.0,
+      "neededToSend": 233.0,
+      "daysOfCover": 51.4
+    },
+    {
+      "asin": "B076Q1NVQV",
+      "product": "LGO",
+      "currentInventory": 179.0,
+      "inbound": 228.0,
+      "avgMonthlySale": 350.0,
+      "neededToSend": 375.0,
+      "daysOfCover": 15.3
+    }
+  ],
+  "metaAccounts": [
+    {
+      "name": "New26",
+      "accountId": "1274462564675838",
+      "status": "Active",
+      "share": 38.5,
+      "spendOct": 593000,
+      "purchasesOct": 1045,
+      "roasOct": 1.94,
+      "strategy": "Scale / Evergreen Prospecting"
+    },
+    {
+      "name": "Auravedic Internal",
+      "accountId": "636601780205220",
+      "status": "Active",
+      "share": 24.2,
+      "spendOct": 372000,
+      "purchasesOct": 670,
+      "roasOct": 1.88,
+      "strategy": "Middle of Funnel / Retargeting"
+    },
+    {
+      "name": "MP2",
+      "accountId": "1506928486493862",
+      "status": "Active",
+      "share": 19.8,
+      "spendOct": 305000,
+      "purchasesOct": 530,
+      "roasOct": 1.78,
+      "strategy": "Combo & Hero Push"
+    },
+    {
+      "name": "Auravedic GC",
+      "accountId": "1030922277728502",
+      "status": "Active",
+      "share": 12.1,
+      "spendOct": 186000,
+      "purchasesOct": 320,
+      "roasOct": 1.82,
+      "strategy": "Broad Interest Tests"
+    },
+    {
+      "name": "Fresh Pixel",
+      "accountId": "434037959170111",
+      "status": "Active",
+      "share": 5.4,
+      "spendOct": 84000,
+      "purchasesOct": 145,
+      "roasOct": 1.62,
+      "strategy": "Initiate Checkout Optimised (Remarketing)"
+    },
+    {
+      "name": "Auravedic Admin",
+      "accountId": "100149933695451",
+      "status": "Excluded",
+      "share": 0.0,
+      "spendOct": 0,
+      "purchasesOct": 0,
+      "roasOct": 0.0,
+      "strategy": "Admin Account - Always Excluded"
+    }
+  ],
+  "warehouseStock": [
+    {
+      "key": "K100",
+      "name": "Kumkumadi Oil 100ml",
+      "cbeD2CAvl": 2840,
+      "cbeBulkReserve": 1200,
+      "cbeSIH": 4040,
+      "mumbaiSIH": 3150,
+      "totalStock": 7190,
+      "dailyRunRate": 165,
+      "daysOfCover": 43.5,
+      "reorderNeeded": false
+    },
+    {
+      "key": "K30",
+      "name": "Kumkumadi Tailam 30ml",
+      "cbeD2CAvl": 420,
+      "cbeBulkReserve": 200,
+      "cbeSIH": 620,
+      "mumbaiSIH": 510,
+      "totalStock": 1130,
+      "dailyRunRate": 35,
+      "daysOfCover": 32.2,
+      "reorderNeeded": false
+    },
+    {
+      "key": "KNC",
+      "name": "Kumkumadi Night Cream 50g",
+      "cbeD2CAvl": 180,
+      "cbeBulkReserve": 50,
+      "cbeSIH": 230,
+      "mumbaiSIH": 290,
+      "totalStock": 520,
+      "dailyRunRate": 48,
+      "daysOfCover": 10.8,
+      "reorderNeeded": true
+    },
+    {
+      "key": "RHO",
+      "name": "Rosemary Hair Oil 100ml",
+      "cbeD2CAvl": 950,
+      "cbeBulkReserve": 400,
+      "cbeSIH": 1350,
+      "mumbaiSIH": 1120,
+      "totalStock": 2470,
+      "dailyRunRate": 62,
+      "daysOfCover": 39.8,
+      "reorderNeeded": false
+    },
+    {
+      "key": "KGEL",
+      "name": "Kumkumadi Gel 100g",
+      "cbeD2CAvl": 210,
+      "cbeBulkReserve": 100,
+      "cbeSIH": 310,
+      "mumbaiSIH": 180,
+      "totalStock": 490,
+      "dailyRunRate": 38,
+      "daysOfCover": 12.8,
+      "reorderNeeded": true
+    },
+    {
+      "key": "KC",
+      "name": "Kumkumadi Cream 100g",
+      "cbeD2CAvl": 340,
+      "cbeBulkReserve": 150,
+      "cbeSIH": 490,
+      "mumbaiSIH": 410,
+      "totalStock": 900,
+      "dailyRunRate": 32,
+      "daysOfCover": 28.1,
+      "reorderNeeded": false
+    },
+    {
+      "key": "KNS",
+      "name": "Kumkumadi Night Serum 50ml",
+      "cbeD2CAvl": 95,
+      "cbeBulkReserve": 50,
+      "cbeSIH": 145,
+      "mumbaiSIH": 120,
+      "totalStock": 265,
+      "dailyRunRate": 42,
+      "daysOfCover": 6.3,
+      "reorderNeeded": true
+    },
+    {
+      "key": "SBO",
+      "name": "Skin Brightening Oil 100ml",
+      "cbeD2CAvl": 680,
+      "cbeBulkReserve": 200,
+      "cbeSIH": 880,
+      "mumbaiSIH": 750,
+      "totalStock": 1630,
+      "dailyRunRate": 24,
+      "daysOfCover": 67.9,
+      "reorderNeeded": false
+    },
+    {
+      "key": "RBMO",
+      "name": "Relaxing Body Massage Oil 200ml",
+      "cbeD2CAvl": 820,
+      "cbeBulkReserve": 300,
+      "cbeSIH": 1120,
+      "mumbaiSIH": 980,
+      "totalStock": 2100,
+      "dailyRunRate": 36,
+      "daysOfCover": 58.3,
+      "reorderNeeded": false
+    }
+  ],
+  "stateCodRisk": [
+    {
+      "state": "Maharashtra",
+      "region": "West",
+      "orders": 1840,
+      "codShare": 42.0,
+      "rtoRate": 4.8,
+      "riskLevel": "Low",
+      "revenue": 1650000
+    },
+    {
+      "state": "Karnataka",
+      "region": "South",
+      "orders": 1420,
+      "codShare": 38.5,
+      "rtoRate": 3.9,
+      "riskLevel": "Low",
+      "revenue": 1320000
+    },
+    {
+      "state": "Tamil Nadu",
+      "region": "South",
+      "orders": 1280,
+      "codShare": 35.0,
+      "rtoRate": 3.5,
+      "riskLevel": "Low",
+      "revenue": 1180000
+    },
+    {
+      "state": "Delhi NCR",
+      "region": "North",
+      "orders": 1150,
+      "codShare": 45.2,
+      "rtoRate": 6.2,
+      "riskLevel": "Medium",
+      "revenue": 1050000
+    },
+    {
+      "state": "Telangana",
+      "region": "South",
+      "orders": 890,
+      "codShare": 40.0,
+      "rtoRate": 4.5,
+      "riskLevel": "Low",
+      "revenue": 810000
+    },
+    {
+      "state": "Uttar Pradesh",
+      "region": "North",
+      "orders": 820,
+      "codShare": 68.0,
+      "rtoRate": 16.5,
+      "riskLevel": "High",
+      "revenue": 710000
+    },
+    {
+      "state": "Rajasthan",
+      "region": "North",
+      "orders": 640,
+      "codShare": 64.5,
+      "rtoRate": 18.2,
+      "riskLevel": "Critical (High RTO)",
+      "revenue": 560000
+    },
+    {
+      "state": "West Bengal",
+      "region": "East",
+      "orders": 580,
+      "codShare": 62.0,
+      "rtoRate": 17.8,
+      "riskLevel": "Critical (High RTO)",
+      "revenue": 490000
+    },
+    {
+      "state": "Bihar",
+      "region": "East",
+      "orders": 490,
+      "codShare": 74.0,
+      "rtoRate": 24.5,
+      "riskLevel": "Critical (High RTO)",
+      "revenue": 410000
+    },
+    {
+      "state": "Assam",
+      "region": "East",
+      "orders": 360,
+      "codShare": 71.5,
+      "rtoRate": 22.0,
+      "riskLevel": "Critical (High RTO)",
+      "revenue": 310000
+    },
+    {
+      "state": "Jammu & Kashmir",
+      "region": "North",
+      "orders": 210,
+      "codShare": 69.0,
+      "rtoRate": 21.5,
+      "riskLevel": "Critical (High RTO)",
+      "revenue": 190000
+    }
+  ],
+  "marketplaceSummary": [
+    {
+      "channel": "Shopify D2C",
+      "type": "Store",
+      "monthlyRevenue": 2700000,
+      "sharePercent": 41.5,
+      "orders": 5773,
+      "aov": 467,
+      "returnRate": 5.2,
+      "status": "Live & Scaling"
+    },
+    {
+      "channel": "Amazon.in",
+      "type": "Marketplace",
+      "monthlyRevenue": 2980000,
+      "sharePercent": 45.8,
+      "orders": 6794,
+      "aov": 438,
+      "returnRate": 4.8,
+      "status": "Live & Core"
+    },
+    {
+      "channel": "Flipkart",
+      "type": "Marketplace",
+      "monthlyRevenue": 1450000,
+      "sharePercent": 22.3,
+      "orders": 3356,
+      "aov": 432,
+      "returnRate": 13.5,
+      "status": "Live (Report upload)"
+    },
+    {
+      "channel": "Nykaa",
+      "type": "Marketplace",
+      "monthlyRevenue": 380000,
+      "sharePercent": 5.8,
+      "orders": 620,
+      "aov": 612,
+      "returnRate": 6.1,
+      "status": "Active (Catalog mapped)"
+    },
+    {
+      "channel": "Myntra",
+      "type": "Marketplace",
+      "monthlyRevenue": 185000,
+      "sharePercent": 2.8,
+      "orders": 310,
+      "aov": 596,
+      "returnRate": 9.4,
+      "status": "Active"
+    }
+  ],
+  "freshness": {
+    "metaAds": "2026-10-25 23:59 IST",
+    "googleAds": "2026-10-25 23:59 IST",
+    "shopifySales": "2026-10-25 23:59 IST",
+    "amazonSales": "2026-10-25 23:59 IST",
+    "amazonSettlement": "2026-10-25 23:59 IST (13-25 Oct daily)",
+    "flipkartOrders": "2026-10-29 23:59 IST",
+    "warehouseStock": "2026-10-29 23:00 IST",
+    "assumptions": {
+      "defaultCOGS": 125,
+      "flatShipping": 65,
+      "freeShippingThreshold": 499,
+      "freeTonerThreshold": 1200
+    }
+  }
+}
