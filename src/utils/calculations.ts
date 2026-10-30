@@ -7,6 +7,8 @@ import { TimePeriod, ChannelFilter } from '../context/DashboardContext';
  * Implements the official business formulas from the Context Handbook & Scope document
  */
 
+export type PnLChannel = 'all' | 'shopify' | 'amazon';
+
 export interface PnLBreakdown {
   grossSales: number;
   discounts: number;
@@ -16,9 +18,11 @@ export interface PnLBreakdown {
   shipping: number;
   marketplaceFees: number;
   adSpend: number;
-  overheads: number;
+  overheads: number; // Company overheads charged to this channel (see overheadShare)
+  overheadShare: number; // 0–1, this channel's share of company overheads (by net revenue)
   netContribution: number;
   contributionMarginPercent: number;
+  dashboardSales: number; // Pre-returns sales: Shopify gross - discounts + Amazon principal
   dashboardProfit: number; // Pre-returns sales - ad spend
 }
 
@@ -38,10 +42,16 @@ export function computeRealisticPnL(params: {
   customCOGSPerUnit?: number;
   flatShippingRate?: number;
   overheads?: number;
+  /** Which channel's P&L to build. Defaults to the combined Shopify + Amazon P&L. */
+  channel?: PnLChannel;
 }): PnLBreakdown {
+  const channel = params.channel ?? 'all';
+  const includeShopify = channel !== 'amazon';
+  const includeAmazon = channel !== 'shopify';
+
   const cogsRate = params.customCOGSPerUnit ?? 125;
   const shippingRate = params.flatShippingRate ?? 65;
-  const overheads = params.overheads ?? 0;
+  const companyOverheads = params.overheads ?? 0;
 
   // Store numbers
   const shopifyNet = params.shopifyGross - params.shopifyDiscounts - params.shopifyReturns;
@@ -55,21 +65,31 @@ export function computeRealisticPnL(params: {
   const amazonFees = params.amazonFees;
   const amazonAds = params.amazonBilledAds;
 
-  // Combined totals
-  const grossSales = params.shopifyGross + params.amazonPrincipal;
-  const discounts = params.shopifyDiscounts + params.amazonPromos;
-  const returns = params.shopifyReturns + params.amazonRefunds;
-  const netRevenue = shopifyNet + amazonNet;
-  const totalCOGS = storeCOGS + amazonCOGS;
-  const totalShipping = storeShipping;
-  const totalMarketplaceFees = amazonFees;
-  const totalAdSpend = storeAds + amazonAds;
+  // Totals for the selected channel(s). Meta + Google spend belongs to the store;
+  // Amazon carries its own billed ads and marketplace fees.
+  const grossSales = (includeShopify ? params.shopifyGross : 0) + (includeAmazon ? params.amazonPrincipal : 0);
+  const discounts = (includeShopify ? params.shopifyDiscounts : 0) + (includeAmazon ? params.amazonPromos : 0);
+  const returns = (includeShopify ? params.shopifyReturns : 0) + (includeAmazon ? params.amazonRefunds : 0);
+  const netRevenue = (includeShopify ? shopifyNet : 0) + (includeAmazon ? amazonNet : 0);
+  const totalCOGS = (includeShopify ? storeCOGS : 0) + (includeAmazon ? amazonCOGS : 0);
+  const totalShipping = includeShopify ? storeShipping : 0;
+  const totalMarketplaceFees = includeAmazon ? amazonFees : 0;
+  const totalAdSpend = (includeShopify ? storeAds : 0) + (includeAmazon ? amazonAds : 0);
+
+  // Overheads are company-level: a single channel carries its share by net revenue, so the
+  // Shopify and Amazon P&Ls add up to the combined one.
+  const companyNet = shopifyNet + amazonNet;
+  const overheadShare = channel === 'all' ? 1 : companyNet > 0 ? netRevenue / companyNet : 0;
+  const overheads = companyOverheads * overheadShare;
 
   const netContribution = netRevenue - totalCOGS - totalShipping - totalMarketplaceFees - totalAdSpend - overheads;
   const contributionMarginPercent = netRevenue > 0 ? (netContribution / netRevenue) * 100 : 0;
 
   // Dashboard Basis Profit (Sales pre-returns minus Meta + Google ad spend)
-  const dashboardProfit = (params.shopifyGross - params.shopifyDiscounts + params.amazonPrincipal) - params.metaGoogleSpend;
+  const dashboardSales =
+    (includeShopify ? params.shopifyGross - params.shopifyDiscounts : 0) +
+    (includeAmazon ? params.amazonPrincipal : 0);
+  const dashboardProfit = dashboardSales - (includeShopify ? params.metaGoogleSpend : 0);
 
   return {
     grossSales,
@@ -81,8 +101,10 @@ export function computeRealisticPnL(params: {
     marketplaceFees: totalMarketplaceFees,
     adSpend: totalAdSpend,
     overheads,
+    overheadShare,
     netContribution,
     contributionMarginPercent,
+    dashboardSales,
     dashboardProfit
   };
 }
@@ -105,6 +127,14 @@ export interface FilteredMetrics {
   priorNetProfit: number;
   marginPercent: number;
   priorMarginPercent: number;
+  // Shopify / Amazon split of the period, whichever channel is selected. Meta + Google spend
+  // belongs to Shopify; Amazon carries its own billed ads.
+  shopifyOrders: number;
+  shopifyAdSpend: number;
+  shopifyMer: number;
+  amazonSales: number;
+  amazonAdSpend: number;
+  amazonMer: number;
   chartData: any[];
   isSingleDay: boolean;
   deltaSales: number;
@@ -191,8 +221,19 @@ export function getFilteredMetrics(
     let cogs = 0;
     let shipping = 0;
     let fees = 0;
+    let shopifySales = 0;
+    let shopifyOrders = 0;
+    let shopifyAdSpend = 0;
+    let amazonSales = 0;
+    let amazonAdSpend = 0;
 
     slice.forEach(r => {
+      shopifySales += r.shopifyPreReturns;
+      shopifyOrders += r.shopifyOrders;
+      shopifyAdSpend += r.metaSpend + r.googleSpend;
+      amazonSales += r.amazonSales;
+      amazonAdSpend += r.amazonBilledAds;
+
       if (channel === 'shopify') {
         sales += r.shopifyPreReturns;
         adSpend += (r.metaSpend + r.googleSpend);
@@ -229,9 +270,10 @@ export function getFilteredMetrics(
         shipping += 0;
         fees += r.myntraSales * 0.28;
       } else {
-        // 'all' channels
+        // 'all' channels: ad spend is Shopify's (Meta + Google) plus Amazon's billed ads, so the
+        // blended MER divides the same sales that the spend produced
         sales += (r.shopifyPreReturns + r.amazonSales);
-        adSpend += (r.metaSpend + r.googleSpend);
+        adSpend += (r.metaSpend + r.googleSpend + r.amazonBilledAds);
         orders += (r.shopifyOrders + r.amazonOrders);
         cogs += (r.shopifyOrders * 1.3 + r.amazonOrders) * cogsRate;
         shipping += (r.shopifyOrders * 0.8) * shippingRate;
@@ -244,7 +286,21 @@ export function getFilteredMetrics(
     const netProfit = sales - cogs - shipping - fees - adSpend;
     const marginPercent = sales > 0 ? (netProfit / sales) * 100 : 0;
 
-    return { sales, adSpend, orders, mer, aov, netProfit, marginPercent };
+    return {
+      sales,
+      adSpend,
+      orders,
+      mer,
+      aov,
+      netProfit,
+      marginPercent,
+      shopifyOrders,
+      shopifyAdSpend,
+      shopifyMer: shopifyAdSpend > 0 ? shopifySales / shopifyAdSpend : 0,
+      amazonSales,
+      amazonAdSpend,
+      amazonMer: amazonAdSpend > 0 ? amazonSales / amazonAdSpend : 0
+    };
   };
 
   const curr = extractChannelData(currentSlice);
@@ -280,7 +336,7 @@ export function getFilteredMetrics(
       daySpend = r.myntraAds;
     } else {
       daySales = r.shopifyPreReturns + r.amazonSales;
-      daySpend = r.metaSpend + r.googleSpend;
+      daySpend = r.metaSpend + r.googleSpend + r.amazonBilledAds;
     }
 
     return {
@@ -288,11 +344,10 @@ export function getFilteredMetrics(
       fullDate: r.date,
       Sales: Math.round(daySales),
       AdSpend: Math.round(daySpend),
-      SalesLakhs: Number((daySales / 100000).toFixed(2)),
-      SpendLakhs: Number((daySpend / 100000).toFixed(2)),
-      ShopifyLakhs: Number((r.shopifyPreReturns / 100000).toFixed(2)),
-      AmazonLakhs: Number((r.amazonSales / 100000).toFixed(2)),
-      FlipkartLakhs: Number((r.flipkartSales / 100000).toFixed(2)),
+      ShopifySales: Math.round(r.shopifyPreReturns),
+      AmazonSales: Math.round(r.amazonSales),
+      ShopifyAdSpend: Math.round(r.metaSpend + r.googleSpend),
+      AmazonAdSpend: Math.round(r.amazonBilledAds),
       MER: daySpend > 0 ? Number((daySales / daySpend).toFixed(2)) : 0
     };
   });
@@ -317,6 +372,12 @@ export function getFilteredMetrics(
     priorNetProfit: prev.netProfit,
     marginPercent: curr.marginPercent,
     priorMarginPercent: prev.marginPercent,
+    shopifyOrders: curr.shopifyOrders,
+    shopifyAdSpend: curr.shopifyAdSpend,
+    shopifyMer: curr.shopifyMer,
+    amazonSales: curr.amazonSales,
+    amazonAdSpend: curr.amazonAdSpend,
+    amazonMer: curr.amazonMer,
     chartData,
     isSingleDay,
     deltaSales: delta(curr.sales, prev.sales),

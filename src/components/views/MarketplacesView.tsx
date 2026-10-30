@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { ViewFilterBar } from '../common/ViewFilterBar';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatNumber } from '../../utils/formatters';
@@ -32,8 +31,6 @@ export const MarketplacesView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
       {/* Responsive Period Filter Bar for Marketplaces */}
       <ViewFilterBar
         showChannels={false}
@@ -301,7 +298,9 @@ export const MarketplacesView: React.FC = () => {
       )}
 
       {/* Nykaa & Myntra View Content */}
-      {(activeMktTab === 'nykaa' || activeMktTab === 'myntra') && (
+      {(activeMktTab === 'nykaa' || activeMktTab === 'myntra') && (() => {
+        const mk = marketplaceSummary.find(m => m.channel === (activeMktTab === 'nykaa' ? 'Nykaa' : 'Myntra'));
+        return (
         <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-2xs space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
@@ -321,27 +320,32 @@ export const MarketplacesView: React.FC = () => {
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
               <span className="text-slate-500 block mb-1">Estimated Monthly Sales:</span>
               <span className="text-2xl font-bold text-slate-900 font-mono">
-                {activeMktTab === 'nykaa' ? '₹3.80L' : '₹1.85L'}
+                {mk ? formatINR(mk.monthlyRevenue, true) : '—'}
               </span>
-              <span className="text-[11px] text-slate-500 mt-1 block">AOV: {activeMktTab === 'nykaa' ? '₹612' : '₹596'}</span>
+              <span className="text-[11px] text-slate-500 mt-1 block">AOV: {mk ? formatINR(mk.aov) : '—'}</span>
             </div>
 
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
               <span className="text-slate-500 block mb-1">Dedicated Platform Ads Spend:</span>
               <span className="text-2xl font-bold text-amber-800 font-mono">
-                {activeMktTab === 'nykaa' ? '₹37.4k' : '₹6.8k'}
+                {mk?.adSpend != null ? formatINR(mk.adSpend, true) : '—'}
               </span>
-              <span className="text-[11px] text-emerald-700 mt-1 block">Ad ROAS: {activeMktTab === 'nykaa' ? '4.05x' : '3.16x'}</span>
+              <span className="text-[11px] text-emerald-700 mt-1 block">
+                Ad ROAS: {mk?.adRoas != null ? `${mk.adRoas.toFixed(2)}x` : '—'}
+              </span>
             </div>
 
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
               <span className="text-slate-500 block mb-1">Catalog & Inventory Mapping:</span>
-              <span className="text-sm font-bold text-slate-800 block mt-1">89 SKUs Mapped</span>
+              <span className="text-sm font-bold text-slate-800 block mt-1">
+                {mk?.skusMapped != null ? `${mk.skusMapped} SKUs Mapped` : 'Not mapped yet'}
+              </span>
               <span className="text-[11px] text-slate-500 block mt-1">Cross-referenced with base products</span>
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

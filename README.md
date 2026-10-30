@@ -39,11 +39,12 @@ npm run preview
    - Dynamic Sensitivity Simulator: Adjust unit COGS (₹80–₹220), shipping rates, and monthly overheads in real time.
 
 3. **Advertising & ROAS**:
-   - Blended efficiency: Spend vs ROAS across Meta, Google, Amazon Ads, and Flipkart Ads.
-   - Meta Ads (5 Accounts): League table for `New26`, `Auravedic Internal`, `MP2`, `Auravedic GC`, and `Fresh Pixel` with glitch filters applied. `Auravedic Admin` is explicitly excluded per Golden Rule.
-   - Google Ads Breakdown: Spikes and ROAS tracked.
-   - Marketplace Ads: Amazon billed ads in settlements & Flipkart campaign ROI.
-   - Creative Fatigue Monitor: Identifies ad sets where CTR &lt; 1.2% while frequency &gt; 2.5 and CPP climbs, with actionable refresh advice.
+   - What the data says: findings computed from the figures on the page (platform over-claim, store ads vs break-even, Amazon ad load, MER trend, creative fatigue).
+   - Platform scorecard: spend share, return per ₹1 and cost per result for Meta, Amazon Ads, Google Ads and Flipkart Ads, with the basis (attributed vs estimate) stated.
+   - Daily spend and daily ROAS charts (one axis each, break-even line), plus an April-to-October trend from the handbook's monthly figures. Every chart has a table view.
+   - Meta account league: spend, purchases, CPP and ROAS for `New26`, `Auravedic Internal`, `MP2`, `Auravedic GC` and `Fresh Pixel`, ranked against the Meta average and break-even. `Auravedic Admin` is excluded from every figure per the handbook. Fresh Pixel is judged on its Initiate Checkout objective, not purchase ROAS.
+   - Budget reallocation simulator: test a move between accounts with diminishing returns built in.
+   - Creative and funnel diagnostics: CTR, CPM, click-to-purchase rate, frequency and a fatigue / leak diagnosis per ad set. **This section runs on an illustrative ad-set sample** (`src/data/adLevelData.ts`): spend, purchases and ROAS tie to the real account figures, but the ad-set split, impressions, clicks and frequency are generated until a Windsor `facebook` ad-set export is loaded.
 
 4. **Shopify D2C Store**:
    - E-commerce Funnel: Sessions → Product Views → Add to Cart → Initiated Checkout → Completed Orders with drop-off percentages.
@@ -73,7 +74,6 @@ npm run preview
    - In-App Report Uploader: Drag and drop Amazon Business Reports (`.csv`), Windsor exports, or `Shan-Report-Sheet.xlsx` to parse and update dashboard state on the fly.
    - Governance & Assumptions: Flat ₹125 COGS default, ₹65 shipping for orders &gt; ₹499.
    - Missing Reports Checklist: Outstanding data stream audits.
-   - One-Click Export: Export unified state to JSON or CSV.
 
 ---
 

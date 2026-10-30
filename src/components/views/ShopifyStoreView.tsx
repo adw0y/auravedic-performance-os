@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { ViewFilterBar } from '../common/ViewFilterBar';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatNumber } from '../../utils/formatters';
@@ -83,8 +82,6 @@ export const ShopifyStoreView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
       {/* Responsive Store Filter Bar */}
       <ViewFilterBar
         showChannels={false}

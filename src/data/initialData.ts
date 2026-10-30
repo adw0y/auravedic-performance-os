@@ -115,6 +115,10 @@ export interface MarketplaceItem {
   aov: number;
   returnRate: number;
   status: string;
+  /** Platform ad spend for the month and its return per rupee (marketplaces without an API feed). */
+  adSpend?: number;
+  adRoas?: number;
+  skusMapped?: number;
 }
 
 export interface FreshnessInfo {

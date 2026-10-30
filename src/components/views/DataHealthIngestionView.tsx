@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
-import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
-import { parseUploadedFile, exportToJSON, exportToCSV } from '../../utils/fileParsers';
+import { parseUploadedFile } from '../../utils/fileParsers';
 import {
   Database,
   UploadCloud,
@@ -11,7 +9,6 @@ import {
   CheckCircle2,
   AlertCircle,
   Clock,
-  Download,
   RotateCcw,
   Sparkles,
   ShieldCheck,
@@ -20,7 +17,6 @@ import {
 
 export const DataHealthIngestionView: React.FC = () => {
   const {
-    data,
     updateAmazonData,
     resetToDefaults,
     defaultCOGS,
@@ -65,43 +61,6 @@ export const DataHealthIngestionView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
-      {/* Headline Health Status */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard
-          title="Overall Data Health"
-          value="94.8%"
-          subtitle="Core pipelines synchronized through Oct 25/29"
-          badgeText="Operational"
-          badgeVariant="success"
-        />
-
-        <MetricCard
-          title="Ingested Data Sources"
-          value="8 Pipelines"
-          subtitle="Shopify, Amazon, Meta (5x), Google, FKT, WH"
-          badgeText="Multi-Channel"
-          badgeVariant="primary"
-        />
-
-        <MetricCard
-          title="Data Caveats Flagged"
-          value="3 Notices"
-          subtitle="MP2 glitch, 21 Oct fee, Flipkart estimate"
-          badgeText="Audit Active"
-          badgeVariant="warning"
-        />
-
-        <MetricCard
-          title="PII Protection Status"
-          value="100% Clean"
-          subtitle="Zero customer names, phones, or addresses"
-          badgeText="Golden Rule 2"
-          badgeVariant="success"
-        />
-      </div>
-
       {/* Interactive In-App File Ingestion (Drag & Drop Uploader) */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-2xs space-y-5">
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
@@ -118,14 +77,6 @@ export const DataHealthIngestionView: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => exportToJSON(data, 'auravedic-complete-dashboard-state.json')}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors border border-slate-200"
-            >
-              <Download className="w-3.5 h-3.5" />
-              Export JSON State
-            </button>
-
             <button
               onClick={resetToDefaults}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-rose-50 hover:text-rose-700 text-slate-600 text-xs font-semibold rounded-lg transition-colors border border-slate-200"

@@ -340,8 +340,8 @@ MARKETPLACE_SUMMARY = [
     {"channel": "Shopify D2C", "type": "Store", "monthlyRevenue": 2700000, "sharePercent": 41.5, "orders": 5773, "aov": 467, "returnRate": 5.2, "status": "Live & Scaling"},
     {"channel": "Amazon.in", "type": "Marketplace", "monthlyRevenue": 2980000, "sharePercent": 45.8, "orders": 6794, "aov": 438, "returnRate": 4.8, "status": "Live & Core"},
     {"channel": "Flipkart", "type": "Marketplace", "monthlyRevenue": 1450000, "sharePercent": 22.3, "orders": 3356, "aov": 432, "returnRate": 13.5, "status": "Live (Report upload)"},
-    {"channel": "Nykaa", "type": "Marketplace", "monthlyRevenue": 380000, "sharePercent": 5.8, "orders": 620, "aov": 612, "returnRate": 6.1, "status": "Active (Catalog mapped)"},
-    {"channel": "Myntra", "type": "Marketplace", "monthlyRevenue": 185000, "sharePercent": 2.8, "orders": 310, "aov": 596, "returnRate": 9.4, "status": "Active"}
+    {"channel": "Nykaa", "type": "Marketplace", "monthlyRevenue": 380000, "sharePercent": 5.8, "orders": 620, "aov": 612, "returnRate": 6.1, "status": "Active (Catalog mapped)", "adSpend": 37400, "adRoas": 4.05, "skusMapped": 89},
+    {"channel": "Myntra", "type": "Marketplace", "monthlyRevenue": 185000, "sharePercent": 2.8, "orders": 310, "aov": 596, "returnRate": 9.4, "status": "Active", "adSpend": 6800, "adRoas": 3.16}
 ]
 
 # Write out files
@@ -495,6 +495,10 @@ export interface MarketplaceItem {{
   aov: number;
   returnRate: number;
   status: string;
+  /** Platform ad spend for the month and its return per rupee (marketplaces without an API feed). */
+  adSpend?: number;
+  adRoas?: number;
+  skusMapped?: number;
 }}
 
 export interface FreshnessInfo {{

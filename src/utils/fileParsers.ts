@@ -129,22 +129,6 @@ export async function parseUploadedFile(file: File): Promise<ParsedReportResult>
 }
 
 /**
- * Download arbitrary data as a JSON file
- */
-export function exportToJSON(data: any, filename: string = 'auravedic-dashboard-data.json') {
-  const jsonStr = JSON.stringify(data, null, 2);
-  const blob = new Blob([jsonStr], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-/**
  * Download an array of objects as a CSV file
  */
 export function exportToCSV(data: any[], filename: string = 'export.csv') {

@@ -1542,7 +1542,10 @@
       "orders": 620,
       "aov": 612,
       "returnRate": 6.1,
-      "status": "Active (Catalog mapped)"
+      "status": "Active (Catalog mapped)",
+      "adSpend": 37400,
+      "adRoas": 4.05,
+      "skusMapped": 89
     },
     {
       "channel": "Myntra",
@@ -1552,7 +1555,9 @@
       "orders": 310,
       "aov": 596,
       "returnRate": 9.4,
-      "status": "Active"
+      "status": "Active",
+      "adSpend": 6800,
+      "adRoas": 3.16
     }
   ],
   "freshness": {

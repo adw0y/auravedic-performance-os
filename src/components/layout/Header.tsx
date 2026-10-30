@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { formatINR, formatPercent } from '../../utils/formatters';
-import { Download, UploadCloud, Target } from 'lucide-react';
-import { exportToJSON } from '../../utils/fileParsers';
+import { UploadCloud, Target } from 'lucide-react';
 import { getFilteredMetrics } from '../../utils/calculations';
 
 export const Header: React.FC = () => {
@@ -80,15 +79,6 @@ export const Header: React.FC = () => {
           >
             <UploadCloud className="w-3.5 h-3.5 text-amber-700" />
             <span>Ingest Reports</span>
-          </button>
-
-          {/* Quick Action: Export Snapshot */}
-          <button
-            onClick={() => exportToJSON(data, `auravedic-dashboard-snapshot-${new Date().toISOString().split('T')[0]}.json`)}
-            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors shrink-0"
-            title="Export full dashboard state to JSON"
-          >
-            <Download className="w-4 h-4" />
           </button>
         </div>
       </div>

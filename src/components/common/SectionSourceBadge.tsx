@@ -1,11 +1,18 @@
 import React from 'react';
 import { Database, Clock } from 'lucide-react';
+import type { ChannelFilter } from '../../context/DashboardContext';
+import { resolveLatency } from '../../data/channelLatency';
 
 interface SectionSourceBadgeProps {
   source: string;
   pipeline?: string;
   syncCadence?: string;
+  /** Explicit latency text; overrides everything else. */
   latency?: string;
+  /** Active channel of the section. When set, latency follows that channel instead of the source text. */
+  channel?: ChannelFilter;
+  /** Hide the latency chip (e.g. when the section shows latency per row instead). */
+  showLatency?: boolean;
   className?: string;
 }
 
@@ -14,20 +21,15 @@ export const SectionSourceBadge: React.FC<SectionSourceBadgeProps> = ({
   pipeline,
   syncCadence,
   latency,
+  channel,
+  showLatency = true,
   className = ''
 }) => {
-  // Derive intelligent latency default if not explicitly passed
-  const resolvedLatency = latency || (() => {
-    const s = `${source} ${pipeline || ''}`.toLowerCase();
-    if (s.includes('amazon ads') || s.includes('sp-api') || s.includes('seller central')) return '24-48h attribution lag';
-    if (s.includes('meta') || s.includes('facebook') || s.includes('instagram')) return '2-4h (T-1 finalized)';
-    if (s.includes('google ads')) return '3-6h (T-1 finalized)';
-    if (s.includes('shopify')) return '< 15m (near real-time)';
-    if (s.includes('flipkart') || s.includes('nykaa') || s.includes('myntra')) return '24-72h settlement lag';
-    if (s.includes('stock desk') || s.includes('warehouse') || s.includes('delhi')) return 'Weekly batch (Friday)';
-    if (s.includes('windsor')) return 'Daily automated ETL';
-    return 'T-1 day (Daily midnight)';
-  })();
+  const latencyGroups = !showLatency
+    ? []
+    : latency
+      ? [{ labels: [] as string[], latency }]
+      : resolveLatency({ channel, text: `${source} ${pipeline || ''}` });
 
   return (
     <div className={`inline-flex flex-wrap items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200/90 text-[11px] text-slate-600 font-sans shadow-2xs ${className}`}>
@@ -50,12 +52,19 @@ export const SectionSourceBadge: React.FC<SectionSourceBadgeProps> = ({
           </span>
         </>
       )}
-      {resolvedLatency && (
+      {latencyGroups.length > 0 && (
         <>
           <span className="text-slate-300">•</span>
-          <span className="flex items-center gap-1 text-slate-600 font-medium text-[10px] bg-slate-100/90 px-1.5 py-0.5 rounded border border-slate-200">
+          <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-slate-600 font-medium text-[10px] bg-slate-100/90 px-1.5 py-0.5 rounded border border-slate-200">
             <Clock className="w-2.5 h-2.5 text-slate-500 shrink-0" />
-            <span>Latency: <strong className="text-slate-700 font-mono">{resolvedLatency}</strong></span>
+            <span>Latency:</span>
+            {latencyGroups.map((g, i) => (
+              <span key={i} className="inline-flex items-center gap-1">
+                {g.labels.length > 0 && <span className="text-slate-500">{g.labels.join(' / ')}</span>}
+                <strong className="text-slate-700 font-mono">{g.latency}</strong>
+                {i < latencyGroups.length - 1 && <span className="text-slate-300">·</span>}
+              </span>
+            ))}
           </span>
         </>
       )}

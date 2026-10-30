@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatNumber } from '../../utils/formatters';
 import {
@@ -35,8 +34,6 @@ export const InventoryOpsView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
       {/* Headline Inventory KPIs (Section) */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">

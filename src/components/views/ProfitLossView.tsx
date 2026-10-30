@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useDashboard, ChannelFilter } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { ViewFilterBar } from '../common/ViewFilterBar';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatNumber } from '../../utils/formatters';
-import { computeRealisticPnL } from '../../utils/calculations';
+import { computeRealisticPnL, PnLChannel } from '../../utils/calculations';
 import { dailyRecords } from '../../data/dailyData';
 import {
   TrendingDown,
@@ -99,7 +98,13 @@ export const ProfitLossView: React.FC = () => {
 
   const proratedOverheads = Math.round((overheads / 30) * slice.length);
 
+  // The P&L only models Shopify and Amazon; any other channel picked elsewhere shows Combined.
+  const pnlChannel: PnLChannel = channel === 'shopify' || channel === 'amazon' ? channel : 'all';
+  const showStore = pnlChannel !== 'amazon';
+  const showAmazon = pnlChannel !== 'shopify';
+
   const pnl = computeRealisticPnL({
+    channel: pnlChannel,
     shopifyGross,
     shopifyDiscounts,
     shopifyReturns,
@@ -128,13 +133,15 @@ export const ProfitLossView: React.FC = () => {
   const amazonNetProfit = amazonNetRevenue - amazonFees - amazonBilledAds - amazonCOGS;
   const amazonMargin = amazonNetRevenue > 0 ? (amazonNetProfit / amazonNetRevenue) * 100 : 0;
 
+  // Steps that don't apply to a channel are left out (Amazon has no outbound shipping line,
+  // Shopify has no marketplace fees).
   const waterfallData = [
     { name: 'Gross Sales', amount: Math.round(pnl.grossSales), type: 'positive' },
     { name: 'Discounts', amount: -Math.round(pnl.discounts), type: 'negative' },
     { name: 'Returns', amount: -Math.round(pnl.returns), type: 'negative' },
     { name: 'COGS', amount: -Math.round(pnl.cogs), type: 'negative' },
-    { name: 'Shipping', amount: -Math.round(pnl.shipping), type: 'negative' },
-    { name: 'Mkt Fees', amount: -Math.round(pnl.marketplaceFees), type: 'negative' },
+    ...(showStore ? [{ name: 'Shipping', amount: -Math.round(pnl.shipping), type: 'negative' }] : []),
+    ...(showAmazon ? [{ name: 'Mkt Fees', amount: -Math.round(pnl.marketplaceFees), type: 'negative' }] : []),
     { name: 'Ad Spend', amount: -Math.round(pnl.adSpend), type: 'negative' },
     { name: 'Overheads', amount: -Math.round(pnl.overheads), type: 'negative' },
     { name: 'Net Profit', amount: Math.round(pnl.netContribution), type: 'result' }
@@ -146,25 +153,50 @@ export const ProfitLossView: React.FC = () => {
     { id: 'amazon', label: 'Amazon FBA P&L' }
   ];
 
+  const channelName = { all: 'Combined (Shopify + Amazon)', shopify: 'Shopify D2C', amazon: 'Amazon.in' }[pnlChannel];
+  const channelSuffix = pnlChannel === 'all' ? '' : ` · ${channelName}`;
+
+  const pnlSource = {
+    all: 'Shopify Net + Amazon Settlement v2 + Flat COGS Assumption',
+    shopify: 'Shopify Net + Windsor Meta & Google Spend + Flat COGS Assumption',
+    amazon: 'Amazon Settlement v2 + SP-API Sales + Flat COGS Assumption'
+  }[pnlChannel];
+
+  const methodASource = {
+    all: 'Shopify Gross Sales (pre-returns) + Amazon Principal minus Windsor Ad Spend',
+    shopify: 'Shopify Gross Sales (pre-returns) minus Windsor Meta & Google Ad Spend',
+    amazon: 'Amazon Ordered Sales (SP-API, pre-returns); Meta & Google spend is store-attributed'
+  }[pnlChannel];
+
+  const methodBSource = {
+    all: 'Shopify Net + Amazon Settlement v2 Flat File minus COGS, Shipping & Ad deductions',
+    shopify: 'Shopify Net minus COGS, Shipping & Windsor Meta & Google Ad Spend',
+    amazon: 'Amazon Settlement v2 Flat File minus Fees, Billed Ads & COGS'
+  }[pnlChannel];
+
+  const overheadLabel =
+    pnlChannel === 'all'
+      ? 'Overheads (prorated to period)'
+      : `Overheads (${formatPercent(pnl.overheadShare * 100)} share by net revenue)`;
+
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
       {/* Responsive P&L Filter Bar */}
       <ViewFilterBar
         showChannels={true}
-        activeChannel={channel === 'all' || channel === 'shopify' || channel === 'amazon' ? channel : 'all'}
+        activeChannel={pnlChannel}
         onChannelChange={setChannel}
         channelOptions={pnlChannelOptions}
         showPeriods={true}
         activePeriod={period}
         onPeriodChange={setPeriod}
         title="Multi-Channel Profit & Loss (P&L)"
-        subtitle={`Analyzing unit economics and net margin contribution for ${periodLabel}`}
+        subtitle={`Analyzing unit economics and net margin contribution for ${channelName} · ${periodLabel}`}
         extraRight={
-          <SectionSourceBadge 
-            source="Shopify Net + Amazon Settlement v2 + Landed Cost Sheet31" 
+          <SectionSourceBadge
+            source={pnlSource}
             pipeline="Dual P&L Engine"
+            channel={pnlChannel}
           />
         }
       />
@@ -177,7 +209,7 @@ export const ProfitLossView: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700">Method A</span>
-                <h3 className="font-bold text-slate-900 text-base">Dashboard-Basis Contribution</h3>
+                <h3 className="font-bold text-slate-900 text-base">Dashboard-Basis Contribution{channelSuffix}</h3>
               </div>
               <span className="text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full font-medium">
                 Sales Pre-Returns − Ads
@@ -191,22 +223,25 @@ export const ProfitLossView: React.FC = () => {
             <div className="space-y-2 text-xs divide-y divide-slate-100">
               <div className="flex justify-between pt-1.5 text-slate-600">
                 <span>Total Sales (Pre-Returns):</span>
-                <span className="font-semibold text-slate-900">{formatINR(pnl.grossSales - pnl.discounts)}</span>
+                <span className="font-semibold text-slate-900">{formatINR(pnl.dashboardSales)}</span>
               </div>
               <div className="flex justify-between pt-1.5 text-slate-600">
-                <span>Meta + Google Ad Spend:</span>
-                <span className="font-semibold text-rose-600">−{formatINR(metaGoogleSpend)}</span>
+                <span>{showStore ? 'Meta + Google Ad Spend:' : 'Meta + Google Ad Spend (store-attributed):'}</span>
+                <span className="font-semibold text-rose-600">−{formatINR(showStore ? metaGoogleSpend : 0)}</span>
               </div>
-              <div className="flex justify-between pt-1.5 text-slate-500 italic">
-                <span>Memo: Amazon Ads Billed in Settlement:</span>
-                <span className="text-slate-600">{formatINR(amazonBilledAds)} (not deducted here)</span>
-              </div>
+              {showAmazon && (
+                <div className="flex justify-between pt-1.5 text-slate-500 italic">
+                  <span>Memo: Amazon Ads Billed in Settlement:</span>
+                  <span className="text-slate-600">{formatINR(amazonBilledAds)} (not deducted here)</span>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="mt-4 pt-3 border-t border-slate-100">
-            <SectionSourceBadge 
-              source="Shopify Gross Sales (pre-returns) + Amazon Principal minus Windsor Ad Spend" 
+            <SectionSourceBadge
+              source={methodASource}
+              channel={pnlChannel}
             />
           </div>
         </div>
@@ -217,7 +252,7 @@ export const ProfitLossView: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-emerald-100 mb-3">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Method B (Standard)</span>
-                <h3 className="font-bold text-slate-900 text-base">Realistic Net Profit</h3>
+                <h3 className="font-bold text-slate-900 text-base">Realistic Net Profit{channelSuffix}</h3>
               </div>
               <span className="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">
                 Full Unit Economics
@@ -240,24 +275,39 @@ export const ProfitLossView: React.FC = () => {
                 <span>Cost of Goods Sold (COGS @ ₹{defaultCOGS}):</span>
                 <span className="font-semibold text-rose-600">−{formatINR(pnl.cogs)}</span>
               </div>
+              {showStore && (
+                <div className="flex justify-between pt-1.5 text-slate-600">
+                  <span>Outbound Shipping (Orders &gt; ₹499 @ ₹{flatShipping}):</span>
+                  <span className="font-semibold text-rose-600">−{formatINR(pnl.shipping)}</span>
+                </div>
+              )}
+              {showAmazon && (
+                <div className="flex justify-between pt-1.5 text-slate-600">
+                  <span>Amazon Marketplace & FBA Fees (~27%):</span>
+                  <span className="font-semibold text-rose-600">−{formatINR(pnl.marketplaceFees)}</span>
+                </div>
+              )}
               <div className="flex justify-between pt-1.5 text-slate-600">
-                <span>Outbound Shipping (Orders &gt; ₹499 @ ₹{flatShipping}):</span>
-                <span className="font-semibold text-rose-600">−{formatINR(pnl.shipping)}</span>
-              </div>
-              <div className="flex justify-between pt-1.5 text-slate-600">
-                <span>Amazon Marketplace & FBA Fees (~27%):</span>
-                <span className="font-semibold text-rose-600">−{formatINR(pnl.marketplaceFees)}</span>
-              </div>
-              <div className="flex justify-between pt-1.5 text-slate-600">
-                <span>All Ad Spend (Meta + Google + Amz):</span>
+                <span>
+                  {pnlChannel === 'all'
+                    ? 'All Ad Spend (Meta + Google + Amz):'
+                    : showStore
+                      ? 'Meta + Google Ad Spend:'
+                      : 'Amazon Ads (Billed in Settlement):'}
+                </span>
                 <span className="font-semibold text-rose-600">−{formatINR(pnl.adSpend)}</span>
+              </div>
+              <div className="flex justify-between pt-1.5 text-slate-600">
+                <span>{overheadLabel}:</span>
+                <span className="font-semibold text-rose-600">−{formatINR(pnl.overheads)}</span>
               </div>
             </div>
           </div>
 
           <div className="mt-4 pt-3 border-t border-emerald-100">
-            <SectionSourceBadge 
-              source="Shopify Net + Amazon Settlement v2 Flat File minus COGS, Shipping & Ad deductions" 
+            <SectionSourceBadge
+              source={methodBSource}
+              channel={pnlChannel}
             />
           </div>
         </div>
@@ -267,7 +317,7 @@ export const ProfitLossView: React.FC = () => {
       <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-2xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h3 className="font-semibold text-slate-900 text-sm">Revenue to Net Contribution Waterfall — {periodLabel}</h3>
+            <h3 className="font-semibold text-slate-900 text-sm">Revenue to Net Contribution Waterfall{channelSuffix} — {periodLabel}</h3>
             <p className="text-xs text-slate-500">Step-by-step margin erosion from gross billings down to net profit.</p>
           </div>
           <div className="flex items-center gap-2 text-xs">
@@ -303,15 +353,18 @@ export const ProfitLossView: React.FC = () => {
         </div>
 
         <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-          <SectionSourceBadge 
-            source="Consolidated Ledger (Discounts, Returns, Shipping, Marketplace Fees, and Billed Ads)" 
+          <SectionSourceBadge
+            source="Consolidated Ledger (Discounts, Returns, Shipping, Marketplace Fees, and Billed Ads)"
+            channel={pnlChannel}
           />
         </div>
       </div>
 
-      {/* Standalone Channel P&L Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Standalone Channel P&L Card: shown only on its own channel tab, not under Combined */}
+      {pnlChannel !== 'all' && (
+      <div className="grid grid-cols-1 gap-6">
         {/* Shopify D2C P&L */}
+        {pnlChannel === 'shopify' && (
         <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
@@ -364,12 +417,14 @@ export const ProfitLossView: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-slate-100">
             <SectionSourceBadge 
-              source="Shopify Store Analytics (ShopifyQL FROM sales) + Windsor Meta & Google Spend" 
+              source="Shopify Store Analytics (ShopifyQL FROM sales) + Windsor Meta & Google Spend"
             />
           </div>
         </div>
+        )}
 
         {/* Amazon.in Seller Central P&L */}
+        {pnlChannel === 'amazon' && (
         <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
@@ -422,11 +477,13 @@ export const ProfitLossView: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-slate-100">
             <SectionSourceBadge 
-              source="Amazon Seller Central Settlement Report v2 (amazon_sp) + SP-API Sales" 
+              source="Amazon Seller Central Settlement Report v2 (amazon_sp) + SP-API Sales"
             />
           </div>
         </div>
+        )}
       </div>
+      )}
 
       {/* Dynamic Sensitivity Simulator */}
       <div className="bg-slate-900 text-slate-200 rounded-xl p-5 border border-slate-800 shadow-md">

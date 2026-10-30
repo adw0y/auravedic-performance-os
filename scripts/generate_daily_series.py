@@ -7,7 +7,9 @@ Calibrated exactly to the Context Handbook monthly totals:
 - Sep 26-30: Reconciles to Sep full totals (Shopify 30.0L, Amazon 28.4L, Ads 21.6L, Orders Shop 6065, Amz 5958)
 """
 
-import datetime, os, json
+import datetime, os, json, math, random
+
+from data_io import write_daily_ts
 
 start_date = datetime.date(2026, 8, 27)
 end_date = datetime.date(2026, 10, 25)
@@ -226,47 +228,83 @@ while current_d <= end_date:
     daily_rows.append(row)
     current_d += datetime.timedelta(days=1)
 
+# ---------------------------------------------------------------------------
+# Day-to-day variance on the ad side.
+# The sales-side series above already move day to day, but spend was derived from
+# sales at a fixed ratio, so ROAS / MER came out identical on every day of a month.
+# Real ad platforms don't behave like that, so give spend, purchase value and
+# purchases their own seeded noise (smooth day to day, with a couple of bad days),
+# then rescale inside each calendar block so every block total is unchanged:
+# monthly spend, ROAS and the handbook benchmarks stay exactly as calibrated.
+# ---------------------------------------------------------------------------
+rng = random.Random(20261030)
+
+# (first row, last row + 1, Meta ROAS, Google ROAS): Aug 27-31, Sep 1-25, Sep 26-30, Oct 1-25.
+# ROAS targets are the handbook's monthly platform ROAS (Aug 1.65 / 2.25, Sep 1.76 / 2.12,
+# Oct 1-25 1.87 / 2.56), so the daily series agrees with the monthly figures.
+BLOCKS = [(0, 5, 1.65, 2.25), (5, 30, 1.76, 2.12), (30, 35, 1.76, 2.12), (35, 60, 1.87, 2.56)]
+
+def ar_noise(n, sigma, rho=0.35, shocks=0, shock_factor=0.8):
+    """Multiplicative noise, lightly autocorrelated, with `shocks` randomly placed bad days."""
+    out, prev = [], 0.0
+    for _ in range(n):
+        prev = rho * prev + rng.gauss(0, sigma)
+        out.append(math.exp(prev))
+    for idx in rng.sample(range(n), min(shocks, n)):
+        out[idx] *= shock_factor
+    return out
+
+def rescale(values, target, ndigits=2):
+    total = sum(values)
+    scaled = [v * target / total for v in values] if total else list(values)
+    out = [round(v, ndigits) for v in scaled]
+    out[-1] = round(out[-1] + (target - sum(out)), ndigits)
+    return out
+
+def rescale_int(values, target):
+    total = sum(values)
+    scaled = [v * target / total for v in values] if total else list(values)
+    out = [int(round(v)) for v in scaled]
+    out[scaled.index(max(scaled))] += target - sum(out)
+    return out
+
+for lo, hi, meta_roas_target, google_roas_target in BLOCKS:
+    rows = daily_rows[lo:hi]
+    n = hi - lo
+
+    def block_sum(key):
+        return sum(r[key] for r in rows)
+
+    # Meta: spend paces around its old shape; value = spend x a noisy daily ROAS;
+    # purchases = value / a noisy daily order value.
+    meta_sp = rescale([r["metaSpend"] * f for r, f in zip(rows, ar_noise(n, 0.09))], block_sum("metaSpend"))
+    meta_val = rescale([sp * f for sp, f in zip(meta_sp, ar_noise(n, 0.11, shocks=2, shock_factor=0.78))],
+                       round(block_sum("metaSpend") * meta_roas_target, 2))
+    meta_pur = rescale_int([v / f for v, f in zip(meta_val, ar_noise(n, 0.06))], int(block_sum("metaPurchases")))
+
+    # Google: noisier ROAS than Meta, fractional conversions.
+    goog_sp = rescale([r["googleSpend"] * f for r, f in zip(rows, ar_noise(n, 0.14))], block_sum("googleSpend"))
+    goog_val = rescale([sp * f for sp, f in zip(goog_sp, ar_noise(n, 0.18, shocks=2, shock_factor=0.7))],
+                       round(block_sum("googleSpend") * google_roas_target, 2))
+    goog_conv = rescale([v / f for v, f in zip(goog_val, ar_noise(n, 0.12))], block_sum("googleConversions"), 1)
+
+    # Marketplace ads
+    amz_ads = rescale([r["amazonBilledAds"] * f for r, f in zip(rows, ar_noise(n, 0.12))], block_sum("amazonBilledAds"))
+    fk_ads = rescale([r["flipkartAds"] * f for r, f in zip(rows, ar_noise(n, 0.15))], block_sum("flipkartAds"))
+    nyk_ads = rescale([r["nykaaAds"] * f for r, f in zip(rows, ar_noise(n, 0.15))], block_sum("nykaaAds"))
+    myn_ads = rescale([r["myntraAds"] * f for r, f in zip(rows, ar_noise(n, 0.15))], block_sum("myntraAds"))
+
+    for i, r in enumerate(rows):
+        r["metaSpend"], r["metaPurchaseValue"], r["metaPurchases"] = meta_sp[i], meta_val[i], meta_pur[i]
+        r["googleSpend"], r["googleConversionValue"], r["googleConversions"] = goog_sp[i], goog_val[i], goog_conv[i]
+        r["amazonBilledAds"], r["flipkartAds"] = amz_ads[i], fk_ads[i]
+        r["nykaaAds"], r["myntraAds"] = nyk_ads[i], myn_ads[i]
+        r["totalAdsIncluded"] = round(r["metaSpend"] + r["googleSpend"], 2)
+        r["salesPerRupeeAd"] = round(r["totalSales"] / r["totalAdsIncluded"], 2)
+
 print(f"Generated {len(daily_rows)} rows.")
 
 out_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'data', 'dailyData.ts')
-ts_code = f"""// Auto-generated 60-day daily dataset calibrated to Auravedic Handbook benchmarks
-export interface DailyRecord {{
-  date: string;
-  shopifyGross: number;
-  shopifyDiscounts: number;
-  shopifyPreReturns: number;
-  shopifyReturns: number;
-  shopifyNet: number;
-  shopifyOrders: number;
-  amazonSales: number;
-  amazonOrders: number;
-  amazonRefunds: number;
-  amazonFees: number;
-  amazonBilledAds: number;
-  flipkartSales: number;
-  flipkartOrders: number;
-  flipkartAds: number;
-  nykaaSales: number;
-  nykaaOrders: number;
-  nykaaAds: number;
-  myntraSales: number;
-  myntraOrders: number;
-  myntraAds: number;
-  metaSpend: number;
-  metaPurchases: number;
-  metaPurchaseValue: number;
-  googleSpend: number;
-  googleConversions: number;
-  googleConversionValue: number;
-  totalAdsIncluded: number;
-  totalSales: number;
-  salesPerRupeeAd: number;
-}}
-
-export const dailyRecords: DailyRecord[] = {json.dumps(daily_rows, indent=2)};
-"""
-
-with open(out_path, 'w', encoding='utf-8') as f:
-    f.write(ts_code)
+write_daily_ts(daily_rows, out_path)
 
 print("Saved dailyData.ts successfully.")

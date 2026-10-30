@@ -1,11 +1,13 @@
 import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
+
 import { ViewFilterBar } from '../common/ViewFilterBar';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatROAS, formatNumber } from '../../utils/formatters';
 import { getFilteredMetrics } from '../../utils/calculations';
+import { resolveLatency } from '../../data/channelLatency';
+import type { ChannelFilter } from '../../context/DashboardContext';
 import {
   TrendingUp,
   AlertTriangle,
@@ -32,6 +34,19 @@ import {
   Legend,
   CartesianGrid
 } from 'recharts';
+
+// Compact rupee tick for the chart's left axis: ₹50k, ₹1.5L
+const formatAxisINR = (v: number) =>
+  v >= 100000 ? `₹${(v / 100000).toFixed(1).replace(/\.0$/, '')}L` : v >= 1000 ? `₹${Math.round(v / 1000)}k` : `₹${v}`;
+
+// Scorecard row name -> channel filter key
+const SCORECARD_CHANNEL: Record<string, ChannelFilter> = {
+  'Shopify D2C': 'shopify',
+  'Amazon.in': 'amazon',
+  Flipkart: 'flipkart',
+  Nykaa: 'nykaa',
+  Myntra: 'myntra'
+};
 
 export const ExecutiveSummaryView: React.FC = () => {
   const {
@@ -66,6 +81,12 @@ export const ExecutiveSummaryView: React.FC = () => {
     netProfit,
     priorNetProfit,
     marginPercent,
+    shopifyOrders,
+    shopifyAdSpend,
+    shopifyMer,
+    amazonSales,
+    amazonAdSpend,
+    amazonMer,
     chartData,
     deltaSales,
     deltaAdSpend,
@@ -77,7 +98,6 @@ export const ExecutiveSummaryView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Golden Rules Coverage Banner */}
-      <CoverageBadge />
 
       {/* Command Centre Responsive Filter Bar */}
       <ViewFilterBar
@@ -108,8 +128,8 @@ export const ExecutiveSummaryView: React.FC = () => {
             Core Financial & Marketing KPIs
           </span>
           <SectionSourceBadge 
-            source="Blended Cross-Channel Pipeline (Shopify Analytics + Amazon SP-API + Windsor.ai Meta & Google)" 
-            syncCadence="Daily 06:00 IST" 
+            source="Blended Cross-Channel Pipeline (Shopify Analytics + Amazon SP-API + Windsor.ai Meta & Google)"
+            channel={channel}
           />
         </div>
 
@@ -137,8 +157,9 @@ export const ExecutiveSummaryView: React.FC = () => {
               channel === 'flipkart' ? 'Flipkart Ads' :
               channel === 'nykaa' ? 'Nykaa Ads + Meta Spend' :
               channel === 'myntra' ? 'Myntra Ads' :
-              'Meta + Google (Amazon Billed ~28%)'
+              `Shopify ${formatINR(shopifyAdSpend, true)} + Amazon ${formatINR(amazonAdSpend, true)}`
             }
+            footnote={channel === 'all' ? 'Shopify = Meta + Google · Amazon = billed ads (pre-13 Oct estimated)' : undefined}
             badgeText="Active Ads"
             badgeVariant="neutral"
           />
@@ -149,7 +170,12 @@ export const ExecutiveSummaryView: React.FC = () => {
             priorValue={formatROAS(priorMer)}
             deltaText={`${deltaMer >= 0 ? '+' : ''}${deltaMer.toFixed(1)}% efficiency`}
             deltaPositive={deltaMer >= 0}
-            subtitle={`Sales ÷ Ad Spend (${periodLabel})`}
+            subtitle={
+              channel === 'all'
+                ? `Shopify ${formatROAS(shopifyMer)} · Amazon ${formatROAS(amazonMer)}`
+                : `Sales ÷ Ad Spend (${periodLabel})`
+            }
+            footnote={channel === 'all' ? `Total sales ÷ total ad spend (${periodLabel})` : undefined}
             badgeText="Efficiency"
             badgeVariant="success"
           />
@@ -185,17 +211,21 @@ export const ExecutiveSummaryView: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Customer CAC (Shopify)</div>
-          <div className="text-xl font-bold text-slate-900 mt-1">₹331</div>
-          <div className="text-[11px] text-emerald-600 mt-0.5">Payback period: ~38 days</div>
-        </div>
+        {(channel === 'shopify' || channel === 'all') && (
+          <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Customer CAC (Shopify)</div>
+            <div className="text-xl font-bold text-slate-900 mt-1">₹{shopifyOrders > 0 ? Math.round(shopifyAdSpend / shopifyOrders).toLocaleString('en-IN') : '0'}</div>
+            <div className="text-[11px] text-emerald-600 mt-0.5">Payback period: ~38 days</div>
+          </div>
+        )}
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Amazon TACOS (Est)</div>
-          <div className="text-xl font-bold text-amber-700 mt-1">27.5%</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">Billed ads in settlement</div>
-        </div>
+        {(channel === 'amazon' || channel === 'all') && (
+          <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Amazon TACOS (Est)</div>
+            <div className="text-xl font-bold text-amber-700 mt-1">{amazonSales > 0 ? (amazonAdSpend / amazonSales * 100).toFixed(1) : '0.0'}%</div>
+            <div className="text-[11px] text-slate-500 mt-0.5">Billed ads in settlement</div>
+          </div>
+        )}
       </div>
 
       {/* Main Dynamic Chart (Section) */}
@@ -216,8 +246,8 @@ export const ExecutiveSummaryView: React.FC = () => {
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-600"></span> Sales
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-rose-50 text-rose-700 font-medium border border-rose-200">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Ad Spend
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-medium border border-blue-200">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Ad Spend
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> MER (Efficiency)
@@ -230,11 +260,11 @@ export const ExecutiveSummaryView: React.FC = () => {
             <ComposedChart data={chartData} margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
               <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#64748B' }} />
-              <YAxis yAxisId="left" tick={{ fontSize: 11, fill: '#64748B' }} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: '#64748B' }} domain={[1.0, 4.5]} />
-              <Tooltip 
+              <YAxis yAxisId="left" tick={{ fontSize: 11, fill: '#64748B' }} tickFormatter={formatAxisINR} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: '#64748B' }} domain={[0, 'auto']} tickFormatter={(v) => `${v}x`} />
+              <Tooltip
                 formatter={(val: any, name: string) => {
-                  if (name === 'MER') return [`${Number(val).toFixed(2)}x`, 'Sales per ₹1 Ad'];
+                  if (name.startsWith('MER')) return [`${Number(val).toFixed(2)}x`, 'Sales per ₹1 Ad'];
                   return [`₹${Number(val).toLocaleString('en-IN')}`, name];
                 }}
                 contentStyle={{ backgroundColor: '#0F172A', borderRadius: '8px', border: 'none', color: '#F8FAFC', fontSize: '12px' }}
@@ -242,14 +272,15 @@ export const ExecutiveSummaryView: React.FC = () => {
               <Legend />
               {channel === 'all' ? (
                 <>
-                  <Bar yAxisId="left" dataKey="ShopifyLakhs" stackId="a" fill="#D97706" name="Shopify (₹L)" />
-                  <Bar yAxisId="left" dataKey="AmazonLakhs" stackId="a" fill="#FBBF24" name="Amazon (₹L)" />
-                  <Bar yAxisId="left" dataKey="SpendLakhs" fill="#EF4444" name="Ad Spend (₹L)" />
+                  <Bar yAxisId="left" dataKey="ShopifySales" stackId="sales" fill="#D97706" name="Shopify Sales" />
+                  <Bar yAxisId="left" dataKey="AmazonSales" stackId="sales" fill="#FBBF24" name="Amazon Sales" />
+                  <Bar yAxisId="left" dataKey="ShopifyAdSpend" stackId="ads" fill="#2563EB" name="Shopify Ad Spend (Meta + Google)" />
+                  <Bar yAxisId="left" dataKey="AmazonAdSpend" stackId="ads" fill="#93C5FD" name="Amazon Ad Spend (Billed)" />
                 </>
               ) : (
                 <>
                   <Bar yAxisId="left" dataKey="Sales" fill="#D97706" name={`${channelLabel} Sales`} radius={[4, 4, 0, 0]} />
-                  <Bar yAxisId="left" dataKey="AdSpend" fill="#EF4444" name="Ad Spend" radius={[4, 4, 0, 0]} />
+                  <Bar yAxisId="left" dataKey="AdSpend" fill="#3B82F6" name="Ad Spend" radius={[4, 4, 0, 0]} />
                 </>
               )}
               <Line yAxisId="right" type="monotone" dataKey="MER" stroke="#10B981" strokeWidth={2.5} dot={{ r: 3 }} name="MER (Sales/₹1 Ad)" />
@@ -260,7 +291,8 @@ export const ExecutiveSummaryView: React.FC = () => {
         <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
           <SectionSourceBadge 
             source="Daily Time-Series (Shopify Gross-Discounts, Amazon Ordered Sales, Windsor Meta 5-Accounts & Google Ads)" 
-            pipeline="dailyRecords (60-day calibrated series)" 
+            pipeline="dailyRecords (60-day calibrated series)"
+            channel={channel}
           />
         </div>
       </div>
@@ -273,7 +305,8 @@ export const ExecutiveSummaryView: React.FC = () => {
             <p className="text-xs text-slate-500">Cross-channel comparison across stores and active marketplaces.</p>
           </div>
           <SectionSourceBadge 
-            source="Shopify Analytics + Amazon SP-API + Slack #flipkart-reports + Master Catalog Mappings" 
+            source="Shopify Analytics + Amazon SP-API + Slack #flipkart-reports + Master Catalog Mappings"
+            showLatency={false}
           />
         </div>
 
@@ -288,6 +321,7 @@ export const ExecutiveSummaryView: React.FC = () => {
                 <th className="py-2.5 px-3 text-right">Orders</th>
                 <th className="py-2.5 px-3 text-right">AOV</th>
                 <th className="py-2.5 px-3 text-right">Return Rate</th>
+                <th className="py-2.5 px-3">Data Latency</th>
                 <th className="py-2.5 px-3">Quick Filter</th>
               </tr>
             </thead>
@@ -320,6 +354,19 @@ export const ExecutiveSummaryView: React.FC = () => {
                       }`}>
                         {formatPercent(m.returnRate)}
                       </span>
+                    </td>
+                    <td className="py-2.5 px-3 text-[11px] text-slate-600 font-normal">
+                      {(() => {
+                        const key = SCORECARD_CHANNEL[m.channel];
+                        const groups = key ? resolveLatency({ channel: key }) : [];
+                        if (groups.length === 0) return <span className="text-slate-400">—</span>;
+                        return groups.map((g, i) => (
+                          <div key={i} className="whitespace-nowrap">
+                            {groups.length > 1 && <span className="text-slate-400">{g.labels.join(' / ')}: </span>}
+                            {g.latency}
+                          </div>
+                        ));
+                      })()}
                     </td>
                     <td className="py-2.5 px-3">
                       <button

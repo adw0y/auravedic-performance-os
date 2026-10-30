@@ -91,7 +91,6 @@ export const Sidebar: React.FC = () => {
       <div className="p-3">
         <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
           <span>Command Center</span>
-          <span className="text-[10px] text-amber-500 font-normal">v1.0 Live</span>
         </div>
 
         <nav className="space-y-1 mt-1">

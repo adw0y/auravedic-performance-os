@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from '../common/MetricCard';
-import { CoverageBadge } from '../layout/CoverageBadge';
 import { SectionSourceBadge } from '../common/SectionSourceBadge';
 import { formatINR, formatPercent, formatNumber } from '../../utils/formatters';
 import {
@@ -17,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export const ProductsRecipesView: React.FC = () => {
-  const { data } = useDashboard();
+  const { data, defaultCOGS } = useDashboard();
   const { baseProducts, recipes, unitEconomics } = data;
 
   const [selectedBaseKey, setSelectedBaseKey] = useState<string>('K100');
@@ -34,8 +33,6 @@ export const ProductsRecipesView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <CoverageBadge />
-
       {/* Top Banner: Explaining the Recipe Engine */}
       <div className="bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 text-white rounded-xl p-5 shadow-sm space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -44,15 +41,15 @@ export const ProductsRecipesView: React.FC = () => {
               <Layers className="w-3.5 h-3.5" />
               Formula & Recipe Deconstruction Engine
             </span>
-            <h2 className="text-lg font-bold text-white">43 Base Products Exploded Across 190 Finished SKUs & Combos</h2>
+            <h2 className="text-lg font-bold text-white">{baseProducts.length} Base Products, {recipes.length} Sample Recipes Loaded</h2>
             <p className="text-xs text-amber-100/80 mt-1 leading-relaxed">
-              Combos consume their component base products. Click any base product below to see all listings (singles, packs, combos) across Shopify and Amazon that draw from its factory inventory.
+              Combos consume their component base products. Click any base product below to see the listings (singles, packs, combos) that draw from its stock. The stock desk holds 190 recipes in full; only a sample of them is loaded here.
             </p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-xs px-4 py-2.5 rounded-xl border border-white/20 text-xs">
-            <span className="text-amber-200 block text-[10px] uppercase font-bold">Catalog Size:</span>
-            <span className="text-xl font-bold font-mono">43 Base • 190 Listings</span>
+            <span className="text-amber-200 block text-[10px] uppercase font-bold">Loaded:</span>
+            <span className="text-xl font-bold font-mono">{baseProducts.length} Base • {recipes.length} of 190 Recipes</span>
           </div>
         </div>
 
@@ -120,7 +117,11 @@ export const ProductsRecipesView: React.FC = () => {
                       item.netProfitWithRTO < 10 ? 'bg-amber-100 text-amber-800 border-amber-300' :
                       'bg-emerald-100 text-emerald-800 border-emerald-300'
                     }`}>
-                      {item.netProfitWithRTO < 0 ? 'LOSING MONEY (-26%)' : item.netProfitWithRTO < 10 ? 'Thin Margin (₹3)' : 'Healthy'}
+                      {item.netProfitWithRTO < 0
+                        ? `Losing ${formatINR(-item.netProfitWithRTO)} per order`
+                        : item.netProfitWithRTO < 10
+                          ? `Thin margin (${formatINR(item.netProfitWithRTO)} per order)`
+                          : 'Healthy'}
                     </span>
                   </td>
                 </tr>
@@ -199,7 +200,9 @@ export const ProductsRecipesView: React.FC = () => {
                   </span>
                   <h3 className="font-bold text-slate-900 text-base">{selectedBase.name}</h3>
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">Category: {selectedBase.category} • MRP: ₹{selectedBase.mrp} • Landed Cost: ₹{selectedBase.defaultCost}</p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Category: {selectedBase.category} • MRP: ₹{selectedBase.mrp} <span className="text-amber-700">(placeholder)</span> • Landed cost: not provided yet (P&L assumes a flat ₹{defaultCOGS} per unit)
+                </p>
               </div>
 
               <div className="text-right">
